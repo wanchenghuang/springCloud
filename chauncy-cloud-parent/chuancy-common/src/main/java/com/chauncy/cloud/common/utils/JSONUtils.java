@@ -9,6 +9,8 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import lombok.NonNull;
+import lombok.SneakyThrows;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,7 +51,8 @@ public class JSONUtils {
      * @param object object
      * @return object to json string
      */
-    public static String toJson(Object object) {
+    @SneakyThrows
+    public static String toJson(@NonNull Object object) {
         try {
             return JSONObject.toJSONString(object, false);
         } catch (Exception e) {
