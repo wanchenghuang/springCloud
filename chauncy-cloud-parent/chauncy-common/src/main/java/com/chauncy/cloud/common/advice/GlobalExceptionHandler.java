@@ -55,9 +55,10 @@ public class GlobalExceptionHandler {
         List<FieldError> fieldErrors = e.getBindingResult().getFieldErrors();
         StringBuilder builder = new StringBuilder(128);
         for (FieldError fieldError : fieldErrors) {
-            builder.append("[")
+            builder.append("【")
                     .append(fieldError.getField())
-                    .append("]")
+                    .append("】")
+                    .append("为【").append(fieldError.getRejectedValue()).append("】")
                     .append(fieldError.getDefaultMessage())
                     .append(";");
         }

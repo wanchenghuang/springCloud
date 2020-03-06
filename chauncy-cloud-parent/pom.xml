@@ -10,9 +10,9 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>chuancy-common</module>
+        <module>chauncy-common</module>
         <module>chauncy-data</module>
-        <module>chuancy-core</module>
+        <module>chauncy-core</module>
     </modules>
 
     <parent>
@@ -137,18 +137,18 @@
             </dependency>
 
             <!--mybatis不支持java8的时间类型，但是mybatis-plus自动生成的类型是java8的，所以需要引入这个-->
-            <dependency>
+            <!--<dependency>
                 <groupId>org.mybatis</groupId>
                 <artifactId>mybatis-typehandlers-jsr310</artifactId>
                 <version>${mybatis-typehandlers-jsr310-version}</version>
-            </dependency>
+            </dependency>-->
 
             <!--mybatis依赖包-->
-            <dependency>
+            <!--<dependency>
                 <groupId>org.mybatis.spring.boot</groupId>
                 <artifactId>mybatis-spring-boot-starter</artifactId>
                 <version>${mybatis-starter.version}</version>
-            </dependency>
+            </dependency>-->
 
             <!--分页插件-->
             <dependency>
