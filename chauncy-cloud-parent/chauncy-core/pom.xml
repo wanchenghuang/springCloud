@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>chuancy-core</artifactId>
+    <artifactId>chauncy-core</artifactId>
     <packaging>pom</packaging>
     <modules>
         <module>chauncy-config</module>

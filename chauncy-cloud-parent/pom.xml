@@ -13,6 +13,7 @@
         <module>chauncy-common</module>
         <module>chauncy-data</module>
         <module>chauncy-core</module>
+        <module>chauncy-demos</module>
     </modules>
 
     <parent>
