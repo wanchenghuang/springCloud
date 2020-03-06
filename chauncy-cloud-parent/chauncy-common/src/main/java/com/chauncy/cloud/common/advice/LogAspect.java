@@ -8,6 +8,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +24,7 @@ import java.util.Map;
  */
 @Slf4j
 @Aspect
+@Component
 public class LogAspect {
 
     @Pointcut("execution(* com.chauncy.cloud..*Controller.*(..)) && " +

@@ -9,22 +9,20 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>chauncy-data</artifactId>
+    <artifactId>chauncy-demos</artifactId>
+    <packaging>pom</packaging>
 
+    <modules>
+        <module>chauncy-web</module>
+    </modules>
 
     <dependencies>
 
         <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>${mybatis-plus-starter.version}</version>
-        </dependency>
-
-        <dependency>
             <groupId>com.chauncy.cloud</groupId>
-            <artifactId>chauncy-common</artifactId>
+            <artifactId>chauncy-config</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-
     </dependencies>
+
 </project>
