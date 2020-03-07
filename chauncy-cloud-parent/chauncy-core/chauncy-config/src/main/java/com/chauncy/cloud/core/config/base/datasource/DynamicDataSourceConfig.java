@@ -11,6 +11,8 @@ import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
 import java.util.HashMap;
@@ -36,14 +38,44 @@ public class DynamicDataSourceConfig {
     }
 
 
-    @Bean
+    /*@Bean
     @Primary
     public DynamicDataSource dataSource(@Qualifier(Constants.MASTER)DataSource mysqlDataSource, @Qualifier(Constants.SLAVE1)DataSource slave1DataSource) {
         Map<Object, Object> targetDataSource = new HashMap<>();
         targetDataSource.put(Constants.MASTER, mysqlDataSource);
         targetDataSource.put(Constants.SLAVE1, slave1DataSource);
         return new DynamicDataSource(mysqlDataSource, targetDataSource);
+    }*/
+
+    /**
+     * 动态数据源: 通过AOP在不同数据源之间动态切换
+     * @return
+     */
+    @Primary
+    @Bean(name = "dynamicDataSource")
+    public DataSource dynamicDataSource() {
+        DynamicDataSource dynamicDataSource = new DynamicDataSource();
+        // 默认数据源
+        dynamicDataSource.setDefaultTargetDataSource(masterDataSource());
+        // 配置多数据源
+        Map<Object, Object> dsMap = new HashMap();
+        dsMap.put("master", masterDataSource());
+        dsMap.put("slave1", slave1DataSource());
+
+        dynamicDataSource.setTargetDataSources(dsMap);
+        dynamicDataSource.afterPropertiesSet();
+        return dynamicDataSource;
     }
+
+    /**
+     * 配置@Transactional注解事物
+     * @return
+     */
+    @Bean
+    public PlatformTransactionManager transactionManager() {
+        return new DataSourceTransactionManager(dynamicDataSource());
+    }
+
 
     @Bean
     public ServletRegistrationBean startViewServlet(){

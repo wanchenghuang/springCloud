@@ -2,10 +2,11 @@ package com.chauncy.cloud.demos.web.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.chauncy.cloud.common.annotation.TargetDataSource;
+import com.chauncy.cloud.common.enums.system.TargetDataSourceEnum;
 import com.chauncy.cloud.common.enums.system.exception.Code;
 import com.chauncy.cloud.common.exception.BusinessException;
 import com.chauncy.cloud.common.utils.CollectionUtils;
-import com.chauncy.cloud.core.config.base.datasource.transaction.TransactionConfig;
+//import com.chauncy.cloud.core.config.base.datasource.transaction.TransactionConfig;
 import com.chauncy.cloud.data.domain.dto.SaveTestUsersDto;
 import com.chauncy.cloud.data.domain.dto.SearchUsersDto;
 import com.chauncy.cloud.data.domain.po.test.TbUserPo;
@@ -38,6 +39,7 @@ import java.util.Set;
  */
 @Service
 @Slf4j
+@Transactional(rollbackFor = Exception.class)
 public class TbUserServiceImpl extends AbstractService<TbUserMapper, TbUserPo> implements ITbUserService {
 
     @Autowired
@@ -47,14 +49,12 @@ public class TbUserServiceImpl extends AbstractService<TbUserMapper, TbUserPo> i
     private TbUsersMapper usersMapper;
 
     @Override
-    @Transactional(value = TransactionConfig.DEFAULT_TX,rollbackFor = Exception.class)
     public List<SearchUsersVo> queryAllUsers() {
         List<SearchUsersVo> usersList = mapper.queryAllUsers();
         return usersList;
     }
 
     @Override
-    @Transactional(value = TransactionConfig.DEFAULT_TX,rollbackFor = Exception.class)
     public void test(String username) {
         TbUserPo user = mapper.selectOne(new QueryWrapper<TbUserPo>()
                 .lambda().like(TbUserPo::getName,username));
@@ -62,19 +62,17 @@ public class TbUserServiceImpl extends AbstractService<TbUserMapper, TbUserPo> i
     }
 
     @Override
-//    @Transactional(value = TransactionConfig.SECOND_TX,rollbackFor = Exception.class)
-//    @TargetDataSource(name = "slave1")
+    @TargetDataSource(value = TargetDataSourceEnum.SLAVE1)
     public TbUsersPo queryUser(String username) {
 
         TbUsersPo tbUsersPo = usersMapper.queryUser(username);
         //测试事务
-        usersMapper.deleteById(30L);
+        usersMapper.deleteById(28L);
         int a= 1/0;
         return tbUsersPo;
     }
 
     @Override
-    @Transactional(value = TransactionConfig.DEFAULT_TX,rollbackFor = Exception.class)
     public void delByIds(List<Long> ids) {
 
         ids.forEach(id->{
@@ -87,7 +85,6 @@ public class TbUserServiceImpl extends AbstractService<TbUserMapper, TbUserPo> i
     }
 
     @Override
-    @Transactional(value = TransactionConfig.DEFAULT_TX,rollbackFor = Exception.class)
     public PageInfo<SearchUsersVo> searchUsers(SearchUsersDto searchUsersDto) {
 
         //测试mybatis-plus结合lambda表达式使用
@@ -123,7 +120,6 @@ public class TbUserServiceImpl extends AbstractService<TbUserMapper, TbUserPo> i
     }
 
     @Override
-    @Transactional(value = TransactionConfig.DEFAULT_TX,rollbackFor = Exception.class)
     public void saveUser(SaveTestUsersDto saveTestUsersDto) {
 
         TbUserPo userPo = new TbUserPo();

@@ -39,11 +39,11 @@ public class DataSourceAspect {
         Method method = signature.getMethod();
         TargetDataSource ds = method.getAnnotation(TargetDataSource.class);
         if(ds == null){
-            DynamicDataSource.setDataSource(Constants.MASTER);
+            DynamicDataSource.setDataSource(ds.value().getValue());
             log.info("选择数据源---master");
         }else{
-            DynamicDataSource.setDataSource(Constants.SLAVE1);
-            log.info("选择数据源---"+ds.name());
+            DynamicDataSource.setDataSource(ds.value().getValue());
+            log.info("选择数据源---"+ds.value().getValue());
         }
 
         try{
