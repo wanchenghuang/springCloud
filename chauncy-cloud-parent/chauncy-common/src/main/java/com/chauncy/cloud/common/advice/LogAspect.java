@@ -8,6 +8,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,6 +27,9 @@ import java.util.Map;
 @Aspect
 @Component
 public class LogAspect {
+
+    @Autowired(required = false)
+    private HttpServletRequest request;
 
     @Pointcut("execution(* com.chauncy.cloud..*Controller.*(..)) && " +
             "(@annotation(org.springframework.web.bind.annotation.RequestMapping) ||" +
@@ -46,7 +50,7 @@ public class LogAspect {
         String methodName = signature.getName();
         String[] parameterNames = signature.getParameterNames();
         Map<String, Object> paramMap = buildParamMap(args, parameterNames);
-        log.info("REQUEST BEGIN [{}], execute method [{}], args = {}", requestId,className + "#" + methodName, JSONUtils.toJson(paramMap));
+        log.info("REQUEST BEGIN [{}], execute method [{}], path [{}],args = {}", requestId,className + "#"+methodName ,request.getRequestURI(), JSONUtils.toJson(paramMap));
         Object proceed;
         try {
             // before

@@ -37,7 +37,7 @@ public class GlobalExceptionHandler {
     public Result handleHttpMessageNotReadableException(HttpMessageNotReadableException e,
                                                         HttpServletRequest request) {
         log.error("参数解析失败", e);
-        return Result.error(Code.BAD_REQUEST, request.getRequestURI());
+        return Result.error(Code.BAD_REQUEST, "参数解析失败",request.getRequestURI());
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -45,7 +45,7 @@ public class GlobalExceptionHandler {
     public Result handleMissingServletRequestParameterException(MissingServletRequestParameterException e,
                                                                 HttpServletRequest request) {
         log.error("缺少请求参数", e);
-        return Result.error(Code.BAD_REQUEST, request.getRequestURI());
+        return Result.error(Code.BAD_REQUEST, "缺少请求参数",request.getRequestURI());
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -74,7 +74,7 @@ public class GlobalExceptionHandler {
     public Result handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e,
                                                                HttpServletRequest request) {
         log.error("不支持当前请求方法", e);
-        return Result.error(Code.METHOD_NOT_ALLOWED, request.getRequestURI());
+        return Result.error(Code.METHOD_NOT_ALLOWED, "不支持当前请求方法",request.getRequestURI());
     }
 
     @ResponseStatus(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
@@ -82,7 +82,7 @@ public class GlobalExceptionHandler {
     public Result handleHttpRequestMethodNotSupportedException(HttpMediaTypeNotSupportedException e,
                                                                HttpServletRequest request) {
         log.error("不支持当前媒体类型", e);
-        return Result.error(Code.UNSUPPORTED_MEDIA_TYPE, request.getRequestURI());
+        return Result.error(Code.UNSUPPORTED_MEDIA_TYPE, "不支持当前媒体类型",request.getRequestURI());
     }
 
     /**

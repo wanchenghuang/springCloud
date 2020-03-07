@@ -9,7 +9,7 @@ import lombok.Getter;
  */
 public enum TargetDataSourceEnum {
 
-    MASTER("mysql"),SLAVE1("db2");
+    MASTER("master"),SLAVE1("slave1");
 
     private String value;
 

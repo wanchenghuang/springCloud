@@ -16,7 +16,17 @@ import java.util.Map;
  */
 public abstract class AbstractService<M extends BaseMapper<T>,T> extends ServiceImpl<M, T> implements Service<T> {
 
+    protected static int defaultPageSize = 10;
+
+    protected static int defaultPageNo = 1;
+
+    protected static String defaultSoft = "create_time desc";
+
     @Autowired
     private IBaseMapper<T> iBaseMapper;
 
+    @Override
+    public Map<String, Object> findByUserName(String username) {
+        return iBaseMapper.findByUserName(username);
+    }
 }

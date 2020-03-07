@@ -12,4 +12,5 @@ import java.util.Map;
  */
 public interface Service<T> extends IService<T> {
 
+    Map<String, Object> findByUserName(String username);
 }
