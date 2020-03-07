@@ -4,6 +4,7 @@ import com.chauncy.cloud.data.domain.dto.SaveTestUsersDto;
 import com.chauncy.cloud.data.domain.dto.SearchUsersDto;
 import com.chauncy.cloud.data.domain.po.test.TbUserPo;
 import com.chauncy.cloud.core.config.base.Service;
+import com.chauncy.cloud.data.domain.po.test.TbUsersPo;
 import com.chauncy.cloud.data.domain.vo.test.SearchUsersVo;
 import com.github.pagehelper.PageInfo;
 
@@ -23,7 +24,7 @@ public interface ITbUserService extends Service<TbUserPo> {
 
     void test(String username);
 
-    void queryUser(String username);
+    TbUsersPo queryUser(String username);
 
     void delByIds(List<Long> ids);
 

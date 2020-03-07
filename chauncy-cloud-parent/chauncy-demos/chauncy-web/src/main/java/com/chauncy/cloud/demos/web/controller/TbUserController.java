@@ -68,15 +68,12 @@ public class TbUserController extends BaseController {
      **/
     @GetMapping("/find-by-username")
     @ApiOperation(("测试基础业务模块，根据用户名查询信息"))
-    public Result<Map<String,Object>> findByUserName(String username) {
+    public Result<Map<String,Object>> findByUserName(@RequestParam String username) {
 
         //测试baseService使用
         Map<String, Object> result = service.findByUserName(username);
         //测试业务模块结合lambda使用，查询逻辑删除 where del_flag = 0
         service.test(username);
-
-        //测试切换数据源
-//        service.queryUser(username);
 
         return success(result);
     }
@@ -92,7 +89,7 @@ public class TbUserController extends BaseController {
      * @return com.chauncy.cloud.common.base.Result
      **/
     @DeleteMapping("/del-by-ids/{ids}")
-    @ApiOperation("/根据ID批量删除")
+    @ApiOperation("根据ID批量删除")
     public Result delByIds(@PathVariable @NonNull @ApiParam(required = true,name = "ids",value = "用户ID集合")
                                        List<Long> ids){
 
@@ -136,6 +133,14 @@ public class TbUserController extends BaseController {
         service.saveUser(saveTestUsersDto);
 
         return success();
+    }
+
+    @GetMapping("/query-other-user")
+    @ApiOperation("查询其他数据源用户")
+    public Result queryOtherUser(@RequestParam @ApiParam(required = true,name = "username",value = "名字") String username){
+
+        //测试切换数据源
+        return success(service.queryUser(username));
     }
 
 }

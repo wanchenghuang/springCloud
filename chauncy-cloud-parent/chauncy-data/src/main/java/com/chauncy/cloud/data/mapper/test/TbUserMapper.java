@@ -1,10 +1,7 @@
 package com.chauncy.cloud.data.mapper.test;
 
-import com.chauncy.cloud.common.annotation.TargetDataSource;
-import com.chauncy.cloud.common.enums.system.TargetDataSourceEnum;
 import com.chauncy.cloud.data.domain.dto.SearchUsersDto;
 import com.chauncy.cloud.data.domain.po.test.TbUserPo;
-import com.chauncy.cloud.data.domain.po.test.TbUsersPo;
 import com.chauncy.cloud.data.domain.vo.test.SearchUsersVo;
 import com.chauncy.cloud.data.mapper.base.IBaseMapper;
 

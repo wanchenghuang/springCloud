@@ -20,4 +20,13 @@ public final class Constants {
      */
     public static final String YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd HH:mm:ss";
 
+    /**
+     * 数据源1--master
+     */
+    public static final String MASTER = "master";
+
+    /**
+     * 数据源2--slave1
+     */
+    public static final String  SLAVE1 = "slave1";
 }

@@ -3,7 +3,8 @@ package com.chauncy.cloud.core.config.base.datasource;
 import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;
 import com.alibaba.druid.support.http.StatViewServlet;
 import com.alibaba.druid.support.http.WebStatFilter;
-import com.chauncy.cloud.common.enums.system.TargetDataSourceEnum;
+import com.chauncy.cloud.common.constant.Constants;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
@@ -22,13 +23,13 @@ import java.util.Map;
 @Configuration
 public class DynamicDataSourceConfig {
 
-    @Bean
+    @Bean(name = "master")
     @ConfigurationProperties("spring.datasource.druid.master")
-    public DataSource mysqlDataSource() {
+    public DataSource masterDataSource() {
         return DruidDataSourceBuilder.create().build();
     }
 
-    @Bean
+    @Bean(name = "slave1")
     @ConfigurationProperties("spring.datasource.druid.slave1")
     public DataSource slave1DataSource() {
         return DruidDataSourceBuilder.create().build();
@@ -37,10 +38,10 @@ public class DynamicDataSourceConfig {
 
     @Bean
     @Primary
-    public DynamicDataSource dataSource(DataSource mysqlDataSource, DataSource slave1DataSource) {
+    public DynamicDataSource dataSource(@Qualifier(Constants.MASTER)DataSource mysqlDataSource, @Qualifier(Constants.SLAVE1)DataSource slave1DataSource) {
         Map<Object, Object> targetDataSource = new HashMap<>();
-        targetDataSource.put(TargetDataSourceEnum.MASTER.getValue(), mysqlDataSource);
-        targetDataSource.put(TargetDataSourceEnum.SLAVE1.getValue(), slave1DataSource);
+        targetDataSource.put(Constants.MASTER, mysqlDataSource);
+        targetDataSource.put(Constants.SLAVE1, slave1DataSource);
         return new DynamicDataSource(mysqlDataSource, targetDataSource);
     }
 

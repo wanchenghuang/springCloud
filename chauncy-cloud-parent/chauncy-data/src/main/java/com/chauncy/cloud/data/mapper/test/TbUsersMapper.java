@@ -1,7 +1,6 @@
 package com.chauncy.cloud.data.mapper.test;
 
 import com.chauncy.cloud.common.annotation.TargetDataSource;
-import com.chauncy.cloud.common.enums.system.TargetDataSourceEnum;
 import com.chauncy.cloud.data.domain.po.test.TbUsersPo;
 import com.chauncy.cloud.data.mapper.base.IBaseMapper;
 
@@ -15,6 +14,6 @@ import com.chauncy.cloud.data.mapper.base.IBaseMapper;
  */
 public interface TbUsersMapper extends IBaseMapper<TbUsersPo> {
 
-    @TargetDataSource(TargetDataSourceEnum.SLAVE1)
+//    @TargetDataSource(TargetDataSourceEnum.SLAVE1)
     TbUsersPo queryUser(String username);
 }

@@ -1,7 +1,5 @@
 package com.chauncy.cloud.common.annotation;
 
-import com.chauncy.cloud.common.enums.system.TargetDataSourceEnum;
-
 import java.lang.annotation.*;
 
 /**
@@ -15,6 +13,6 @@ import java.lang.annotation.*;
 @Documented
 public @interface TargetDataSource {
 
-    TargetDataSourceEnum value() default TargetDataSourceEnum.MASTER;
+    String name() default "";
 
 }
