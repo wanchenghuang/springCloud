@@ -135,6 +135,16 @@ public class TbUserController extends BaseController {
         return success();
     }
 
+    /**
+     * @Author chauncy
+     * @Date 2020-03-07 22:50
+     * @Description //测试切换数据源以及事务管理
+     *
+     * @Update chauncy
+     *
+     * @param  username
+     * @return com.chauncy.cloud.common.base.Result
+     **/
     @GetMapping("/query-other-user")
     @ApiOperation("查询其他数据源用户")
     public Result queryOtherUser(@RequestParam @ApiParam(required = true,name = "username",value = "名字") String username){

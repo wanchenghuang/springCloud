@@ -6,7 +6,6 @@ import com.chauncy.cloud.common.enums.system.TargetDataSourceEnum;
 import com.chauncy.cloud.common.enums.system.exception.Code;
 import com.chauncy.cloud.common.exception.BusinessException;
 import com.chauncy.cloud.common.utils.CollectionUtils;
-//import com.chauncy.cloud.core.config.base.datasource.transaction.TransactionConfig;
 import com.chauncy.cloud.data.domain.dto.SaveTestUsersDto;
 import com.chauncy.cloud.data.domain.dto.SearchUsersDto;
 import com.chauncy.cloud.data.domain.po.test.TbUserPo;
@@ -67,8 +66,8 @@ public class TbUserServiceImpl extends AbstractService<TbUserMapper, TbUserPo> i
 
         TbUsersPo tbUsersPo = usersMapper.queryUser(username);
         //测试事务
-        usersMapper.deleteById(28L);
-        int a= 1/0;
+//        usersMapper.deleteById(27L);
+//        int a= 1/0;
         return tbUsersPo;
     }
 
@@ -128,7 +127,7 @@ public class TbUserServiceImpl extends AbstractService<TbUserMapper, TbUserPo> i
         mapper.insert(userPo);
 
         //测试事务回滚
-        int a = 1/0;
+//        int a = 1/0;
 
     }
 }

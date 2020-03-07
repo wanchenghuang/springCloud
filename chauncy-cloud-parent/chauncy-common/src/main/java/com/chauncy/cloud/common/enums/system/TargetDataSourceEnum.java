@@ -6,7 +6,7 @@ package com.chauncy.cloud.common.enums.system;
  */
 public enum TargetDataSourceEnum {
 
-    MASTER("mysql"),SLAVE1("db2");
+    MASTER("mysql"),SLAVE1("slave1");
 
     private String value;
 
