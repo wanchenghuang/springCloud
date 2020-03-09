@@ -99,11 +99,7 @@ management:
       exposure:
         include: '*'
 
-mybatis:
-  configuration:
-    map-underscore-to-camel-case: true
-
 mybatis-plus:
-  type-aliases-package: com.track.*.domain.po.*
+  type-aliases-package: com.chauncy.cloud.*.domain.po.*
   mapper-locations: classpath*:/mapper/**/*Mapper.xml
   typeEnumsPackage: com.chauncy.cloud.*.enums
