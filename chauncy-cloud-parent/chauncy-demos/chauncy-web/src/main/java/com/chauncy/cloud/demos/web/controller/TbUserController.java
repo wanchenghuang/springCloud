@@ -32,7 +32,7 @@ import java.util.Map;
  * @since 2020-03-06
  */
 @RestController
-@RequestMapping("tb-user-po")
+@RequestMapping("/tb-user-po")
 @Api(tags = "用户管理")
 public class TbUserController extends BaseController {
 

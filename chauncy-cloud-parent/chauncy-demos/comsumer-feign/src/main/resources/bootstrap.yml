@@ -1,0 +1,20 @@
+server:
+  port: 9002
+  servlet:
+    context-path: /feign
+spring:
+  application:
+    name: feign-test
+  cloud:
+    nacos:
+      discovery:
+        server-addr: ${REGISTER_HOST:39.108.136.61}:${REGISTER_PORT:8848}
+      config:
+        server-addr: ${REGISTER_HOST:39.108.136.61}:${REGISTER_PORT:8848}
+        file-extension: yml
+    sentinel:
+      transport:
+        dashboard: ${SENTINEL_DASHBOARD_HOST:39.108.136.61}:${SENTINEL_DASHBOARD_PORT:8021}
+    bus:
+      trace:
+        enabled: true

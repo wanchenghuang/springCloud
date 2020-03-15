@@ -111,6 +111,7 @@ public class TbUserServiceImpl extends AbstractService<TbUserMapper, TbUserPo> i
         //去掉其中一个字段
         Set<String> exclusionSet = new HashSet<String>(){{
             add("id");
+            add("class");
         }};
         List instanceList = CollectionUtils.getListByExclusion(searchUsersVoPageInfo.getList(),exclusionSet);
         searchUsersVoPageInfo.setList(instanceList);

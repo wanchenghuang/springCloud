@@ -50,7 +50,7 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
                 SerializerFeature.WriteEnumUsingToString
 
         );
-
+        //localDateTime转换
         fastJsonConfig.setSerializeFilters((ValueFilter) (o, s, source) -> {
             if (source instanceof LocalDateTime) {
                 return DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format((LocalDateTime)source);

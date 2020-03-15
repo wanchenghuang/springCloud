@@ -29,7 +29,7 @@ public class JSONUtils {
 
     private static final Logger logger = LoggerFactory.getLogger(JSONUtils.class);
 
-    private static final ObjectMapper objectMapper = new ObjectMapper();
+    static final ObjectMapper objectMapper = new ObjectMapper();
 
     /**
      * init

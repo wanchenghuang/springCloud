@@ -14,6 +14,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Min;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * @Author cheng
@@ -40,11 +41,11 @@ public class SearchUsersDto {
 
     @ApiModelProperty("最早创建时间")
 //    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate startTime;
+    private LocalDateTime startTime;
 
     @ApiModelProperty("最晚创建时间")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate endTime;
+//    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDateTime endTime;
 
     @Min(1)
     @ApiModelProperty(value = "页码")

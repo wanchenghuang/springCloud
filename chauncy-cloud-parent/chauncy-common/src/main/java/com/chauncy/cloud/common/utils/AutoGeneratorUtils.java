@@ -70,8 +70,8 @@ public class AutoGeneratorUtils {
         pc.setParent("com.chauncy.cloud");
         pc.setEntity("domain.po." + modelName);
         pc.setMapper("mapper." + modelName);
-        pc.setService("temp.service." + modelName);
-        pc.setServiceImpl("temp.service." + modelName + ".impl");
+        pc.setService("temp.client." + modelName);
+        pc.setServiceImpl("temp.client." + modelName + ".impl");
         pc.setController("temp.controller." + modelName);
 
         mpg.setPackageInfo(pc);

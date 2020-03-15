@@ -4,7 +4,7 @@ server:
     context-path: /test
 spring:
   application:
-    name: web
+    name: web-test
   cloud:
     nacos:
       discovery:

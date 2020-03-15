@@ -14,6 +14,7 @@
 
     <modules>
         <module>chauncy-web</module>
+        <module>comsumer-feign</module>
     </modules>
 
     <dependencies>

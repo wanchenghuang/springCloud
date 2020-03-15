@@ -34,7 +34,7 @@ public class JSONUtilsTest {
                 LinkedHashMap.class);
 
         Assert.assertEquals(maps.size(), 1);
-        Assert.assertEquals(maps.get(0).get("mysql service name"), "mysql200");
+        Assert.assertEquals(maps.get(0).get("mysql client name"), "mysql200");
         Assert.assertEquals(maps.get(0).get("mysql address"), "192.168.xx.xx");
         Assert.assertEquals(maps.get(0).get("port"), "3306");
         Assert.assertEquals(maps.get(0).get("no index of number"), "80");
@@ -44,7 +44,7 @@ public class JSONUtilsTest {
     public String list2String() {
 
         LinkedHashMap<String, String> map1 = new LinkedHashMap<>();
-        map1.put("mysql service name", "mysql200");
+        map1.put("mysql client name", "mysql200");
         map1.put("mysql address", "192.168.xx.xx");
         map1.put("port", "3306");
         map1.put("no index of number", "80");
