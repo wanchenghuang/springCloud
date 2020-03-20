@@ -1,8 +1,7 @@
-package com.chauncy.cloud.demos.feign;
+package com.chauncy.cloud.gateway.admin;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+//import com.alicp.jetcache.anno.config.EnableCreateCacheAnnotation;
+//import com.alicp.jetcache.anno.config.EnableMethodCache;
 import com.github.xiaoymin.swaggerbootstrapui.annotations.EnableSwaggerBootstrapUI;
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.annotation.MapperScan;
@@ -11,13 +10,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
  * @Author cheng
- * @create 2020-03-15 16:28
+ * @create 2020-03-17 22:16
  */
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class} )
 @MapperScan("com.chauncy.cloud.*.mapper.*")
@@ -26,19 +24,13 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwaggerBootstrapUI
 @Slf4j
 @EnableDiscoveryClient
-@EnableFeignClients(basePackages = {"com.chauncy.cloud.client"})
-public class FeignConsumerApplication {
+@EnableFeignClients
+//@EnableMethodCache(basePackages = "com.chauncy.cloud")
+//@EnableCreateCacheAnnotation
+public class GatewayAdminApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(FeignConsumerApplication.class, args);
-        log.info("启动成功！！");
+        SpringApplication.run(GatewayAdminApplication.class, args);
+        log.info("启动成功！！！！！");
     }
-
-    /*@Bean
-    public ObjectMapper serializingObjectMapper() {
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-        objectMapper.registerModule(new JavaTimeModule());
-        return objectMapper;
-    }*/
 }

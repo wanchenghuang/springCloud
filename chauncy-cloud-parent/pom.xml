@@ -15,6 +15,7 @@
         <module>chauncy-core</module>
         <module>chauncy-demos</module>
         <module>chauncy-client</module>
+        <module>chauncy-gateway</module>
     </modules>
 
     <parent>
@@ -163,7 +164,7 @@
             </dependency>
 
             <!--springframework start-->
-            <dependency>
+            <!--<dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-core</artifactId>
                 <version>${spring.version}</version>
@@ -193,7 +194,7 @@
                 <artifactId>spring-test</artifactId>
                 <version>${spring.version}</version>
                 <scope>test</scope>
-            </dependency>
+            </dependency>-->
             <!--springframework end-->
 
             <dependency>
@@ -445,6 +446,27 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>${mysql.connector.version}</version>
+        </dependency>
+
+        <!--jetcache缓存 -->
+        <!--<dependency>
+            <groupId>com.alicp.jetcache</groupId>
+            <artifactId>jetcache-starter-redis</artifactId>
+            <version>2.5.14</version>
+        </dependency>-->
+
+        <!-- redis -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <!--spring集成redis所需common-pool2-->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
+            <version>2.5.0</version>
         </dependency>
 
     </dependencies>

@@ -4,8 +4,8 @@ package ${package.Entity}
 import ${pkg}
 </#list>
 <#if swagger2>
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.*;
+import com.chauncy.cloud.data.domain.po.BasePo;
 </#if>
 /**
  * <p>
@@ -18,6 +18,8 @@ import io.swagger.annotations.ApiModelProperty;
 <#if table.convert>
 @TableName("${table.name}")
 </#if>
+@NoArgsConstructor
+@AllArgsConstructor
 <#if swagger2>
     @ApiModel(value="${entity}对象", description="${table.comment!}")
 </#if>

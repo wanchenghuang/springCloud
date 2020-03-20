@@ -1,4 +1,6 @@
 spring:
+  profiles:
+    active: prod
   cloud:
     bus:
       trace:
@@ -15,7 +17,6 @@ spring:
     lettuce:
       pool:
         max-active: 300
-    #password: ${REDIS_PASSWORD:123456}
   datasource:
     druid:
       master:
@@ -89,8 +90,9 @@ logging:
       sql:
         PreparedStatement: debug
     com.chauncy.cloud: debug
-    com.tenmao.eurekaclient.remote: debug
-  path: logs/
+    org.springframework: WARN
+    org.spring.springboot.dao: debug
+#  path: logs/
   file:
     max-size: 1GB
 

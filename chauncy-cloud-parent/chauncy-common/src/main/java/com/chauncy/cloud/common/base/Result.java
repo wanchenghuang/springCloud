@@ -9,6 +9,9 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 /**
  * @Author cheng
@@ -31,12 +34,11 @@ public class Result<T> implements Serializable {
     @ApiModelProperty(value = "返回数据")
     private T data;
 
-
     @ApiModelProperty(value = "出错的请求路径")
     private String path;
 
     @ApiModelProperty(value = "时间戳")
-    private long timestamp = System.currentTimeMillis();
+    private LocalDateTime timestamp = LocalDateTime.now();
 
     public boolean isSuccess() {
         return code == Code.SUCCESS.getCode();

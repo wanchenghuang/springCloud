@@ -23,8 +23,8 @@ public class AutoGeneratorUtils {
 
     public static void main(String args[]){
 
-        autoGenerator("root","root","test","tickets",
-                "tb_user","47.102.104.124",3306L);
+        autoGenerator("root","%dt6$#@%s","gateway","sc_gateway",
+                "gateway_route","39.108.136.61",8386L);
     }
 
     //参数 username/password/packageName/dataBaseName/tableName/url
@@ -120,7 +120,7 @@ public class AutoGeneratorUtils {
         StrategyConfig strategy = new StrategyConfig();
         strategy.setNaming(NamingStrategy.underline_to_camel);
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
-//        strategy.setSuperEntityClass("com.chauncy.ipInfo.base.BaseEntity");
+        strategy.setSuperEntityClass("com.chauncy.cloud.data.domain.po.BasePo");
         strategy.setSuperServiceClass("com.chauncy.cloud.core.config.base.Service");
         strategy.setSuperServiceImplClass("com.chauncy.cloud.core.config.base.AbstractService");
         strategy.setSuperMapperClass("com.chauncy.cloud.data.mapper.base.IBaseMapper");
