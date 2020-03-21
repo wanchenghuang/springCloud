@@ -1,5 +1,6 @@
 package com.chauncy.cloud.data.domain.po.gateway;
 
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -55,17 +56,9 @@ public class GatewayRoutePo extends BasePo implements Serializable {
     @ApiModelProperty(value = "状态：Y-有效，N-无效")
     private String status;
 
-    @ApiModelProperty(value = "创建时间")
-    private LocalDateTime createdTime;
-
-    @ApiModelProperty(value = "更新时间")
-    private LocalDateTime updatedTime;
-
-    @ApiModelProperty(value = "创建人")
-    private String createdBy;
-
-    @ApiModelProperty(value = "更新人")
-    private String updatedBy;
+    @ApiModelProperty(value = "删除标志 0-未删除 1-已删除")
+    @TableLogic
+    private Boolean delFlag;
 
 
 }

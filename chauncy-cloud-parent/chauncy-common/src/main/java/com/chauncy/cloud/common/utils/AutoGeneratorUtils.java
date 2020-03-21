@@ -1,10 +1,12 @@
 package com.chauncy.cloud.common.utils;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.*;
+import com.baomidou.mybatisplus.generator.config.po.TableFill;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
@@ -116,6 +118,13 @@ public class AutoGeneratorUtils {
         templateConfig.setXml(null);
         mpg.setTemplate(templateConfig);
 
+        // 自定义需要填充的字段 数据库中的字段
+        /*List<TableFill> tableFillList = new ArrayList<>();
+        tableFillList.add(new TableFill("created_by", FieldFill.INSERT));
+        tableFillList.add(new TableFill("created_time", FieldFill.INSERT));
+        tableFillList.add(new TableFill("update_by", FieldFill.INSERT_UPDATE));
+        tableFillList.add(new TableFill("update_time", FieldFill.INSERT_UPDATE));*/
+
         // 策略配置
         StrategyConfig strategy = new StrategyConfig();
         strategy.setNaming(NamingStrategy.underline_to_camel);
@@ -128,11 +137,20 @@ public class AutoGeneratorUtils {
         strategy.setRestControllerStyle(true);
         strategy.setSuperControllerClass("com.chauncy.cloud.common.base.BaseController");
         strategy.setInclude(tableName/*scanner("表名，多个英文逗号分割").split(",")*/);
-//        strategy.setSuperEntityColumns("id");
+        //自定义基础的Entity类，公共字段 ，填入将在entity中不出现
+        strategy.setSuperEntityColumns("id");
+        strategy.setSuperEntityColumns("created_by");
+        strategy.setSuperEntityColumns("created_time");
+        strategy.setSuperEntityColumns("update_by");
+        strategy.setSuperEntityColumns("update_time");
+
+
         strategy.setControllerMappingHyphenStyle(true);
         strategy.setEntitySerialVersionUID(true);
         strategy.setTablePrefix(pc.getModuleName() + "_");
         strategy.setLogicDeleteFieldName("del_flag");//对字段del_flag自动添加注解@TableLogic
+        //自定义填充字段
+//        strategy.setTableFillList(tableFillList);
         mpg.setStrategy(strategy);
         mpg.setTemplateEngine(new FreemarkerTemplateEngine());
         mpg.execute();

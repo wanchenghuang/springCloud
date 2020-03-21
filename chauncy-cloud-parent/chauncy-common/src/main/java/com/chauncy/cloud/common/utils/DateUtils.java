@@ -46,7 +46,7 @@ public class DateUtils {
      * @return date string
      */
     public static String getCurrentTime() {
-        return getCurrentTime(Constants.YYYY_MM_DD_HH_MM_SS);
+        return getCurrentTime(Constants.STANDARD_FORMAT);
     }
 
     /**
@@ -88,7 +88,7 @@ public class DateUtils {
      * @return date string
      */
     public static String dateToString(Date date) {
-        return format(date, Constants.YYYY_MM_DD_HH_MM_SS);
+        return format(date, Constants.STANDARD_FORMAT);
     }
 
 
@@ -117,7 +117,7 @@ public class DateUtils {
      * @return yyyy-MM-dd HH:mm:ss format
      */
     public static Date stringToDate(String str) {
-        return parse(str, Constants.YYYY_MM_DD_HH_MM_SS);
+        return parse(str, Constants.STANDARD_FORMAT);
     }
 
     /**
@@ -376,7 +376,7 @@ public class DateUtils {
      */
     public static Date getCurrentDate() {
         return DateUtils.parse(DateUtils.getCurrentTime(),
-                Constants.YYYY_MM_DD_HH_MM_SS);
+                Constants.STANDARD_FORMAT);
     }
 
     /**

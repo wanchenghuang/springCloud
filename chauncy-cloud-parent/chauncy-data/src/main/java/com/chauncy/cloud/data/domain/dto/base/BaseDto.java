@@ -19,6 +19,9 @@ public abstract class BaseDto<T extends BasePo> {
     @ApiModelProperty(value = "用户名")
     private String username;
 
+    @ApiModelProperty(value = "id")
+    private Long id;
+
     /**
      * dto转化为Po，进行后续业务处理
      *
@@ -38,7 +41,7 @@ public abstract class BaseDto<T extends BasePo> {
      * @param clazz
      * @return
      */
-    public T toPo(String id, Class<T> clazz) {
+    public T toPo(Long id, Class<T> clazz) {
         T t = BeanUtils.instantiateClass(clazz);
         t.setId(id);
         BeanUtils.copyProperties(this, t);

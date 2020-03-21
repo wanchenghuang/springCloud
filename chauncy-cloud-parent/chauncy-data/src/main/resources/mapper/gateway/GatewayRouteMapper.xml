@@ -22,5 +22,35 @@
     <sql id="Base_Column_List">
         id, route_id, uri, predicates, filters, orders, description, status, created_time, updated_time, created_by, updated_by
     </sql>
+    <select id="searchRoutes" resultType="com.chauncy.cloud.data.domain.vo.gateway.SearchRoutesVo">
+        select *
+        from gateway_route
+        <where>
+            del_flag = 0
+            <if test="createdTimeStart != null">
+               and DATE_FORMAT(created_time,'%Y-%m-%d %H:%m:%s') &gt; #{createdTimeStart}
+            </if>
+            <if test="createdTimeEnd != null">
+               and DATE_FORMAT(created_time,'%Y-%m-%d %H:%m:%s') &lt; #{createdTimeEnd}
+            </if>
+            <if test="uri != null">
+                and uri like concat('%', #{uri}, '%')
+            </if>
+        </where>
+    </select>
+    <select id="getRouteByConditions" resultType="com.chauncy.cloud.data.domain.vo.gateway.SearchRoutesVo">
+        select *
+        from gateway_route
+        where del_flag = 0
+        <if test="id != null and id != 0 ">
+            and id = #{id}
+        </if>
+        <if test="routeId != null ">
+            and routeId = #{routeId}
+        </if>
+        <if test="uri != null ">
+            and uri = #{uri}
+        </if>
+    </select>
 
 </mapper>

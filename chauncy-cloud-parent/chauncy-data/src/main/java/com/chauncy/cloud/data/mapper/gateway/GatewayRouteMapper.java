@@ -1,7 +1,12 @@
 package com.chauncy.cloud.data.mapper.gateway;
 
+import com.chauncy.cloud.data.domain.dto.gateway.get.GetRouteDto;
+import com.chauncy.cloud.data.domain.dto.gateway.search.SearchRoutesDto;
 import com.chauncy.cloud.data.domain.po.gateway.GatewayRoutePo;
+import com.chauncy.cloud.data.domain.vo.gateway.SearchRoutesVo;
 import com.chauncy.cloud.data.mapper.base.IBaseMapper;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +18,7 @@ import com.chauncy.cloud.data.mapper.base.IBaseMapper;
  */
 public interface GatewayRouteMapper extends IBaseMapper<GatewayRoutePo> {
 
+    List<SearchRoutesVo> searchRoutes(SearchRoutesDto searchRoutesDto);
+
+    SearchRoutesVo getRouteByConditions(GetRouteDto getRouteDto);
 }

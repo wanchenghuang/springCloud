@@ -15,9 +15,18 @@ public final class Constants {
 
     public static final String STANDARD_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
+    public final static String DEFAULT_USERNAME = "system";
+
     /**
-     * date format of yyyy-MM-dd HH:mm:ss
+     *  key of redis
      */
-    public static final String YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd HH:mm:ss";
+    public static final String GATEWAY_ROUTES = "gateway_routes::";
+
+    /**
+     *  route of mq
+     */
+    public static final String QUEUE_NAME = "event-gateway";
+    public static final String EXCHANGE_NAME = "spring-boot-exchange";
+    public static final String ROUTING_KEY = "gateway-route";
 
 }
