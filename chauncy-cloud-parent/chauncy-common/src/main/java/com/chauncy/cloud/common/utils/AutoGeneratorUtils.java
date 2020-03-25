@@ -25,8 +25,8 @@ public class AutoGeneratorUtils {
 
     public static void main(String args[]){
 
-        autoGenerator("root","%dt6$#@%s","gateway","sc_gateway",
-                "gateway_route","39.108.136.61",8386L);
+        autoGenerator("root","%dt6$#@%s","organization","sc_admin",
+                "users","39.108.136.61",8386L);
     }
 
     //参数 username/password/packageName/dataBaseName/tableName/url
@@ -138,11 +138,7 @@ public class AutoGeneratorUtils {
         strategy.setSuperControllerClass("com.chauncy.cloud.common.base.BaseController");
         strategy.setInclude(tableName/*scanner("表名，多个英文逗号分割").split(",")*/);
         //自定义基础的Entity类，公共字段 ，填入将在entity中不出现
-        strategy.setSuperEntityColumns("id");
-        strategy.setSuperEntityColumns("created_by");
-        strategy.setSuperEntityColumns("created_time");
-        strategy.setSuperEntityColumns("update_by");
-        strategy.setSuperEntityColumns("update_time");
+        strategy.setSuperEntityColumns("id","created_by","created_time","updated_by","updated_time");
 
 
         strategy.setControllerMappingHyphenStyle(true);

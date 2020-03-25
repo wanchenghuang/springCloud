@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chauncy.cloud.data.mapper.organization.RolesMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.chauncy.cloud.data.domain.po.organization.RolesPo">
+    <result column="id" property="id" />
+    <result column="created_time" property="createdTime" />
+    <result column="updated_time" property="updatedTime" />
+    <result column="created_by" property="createdBy" />
+    <result column="updated_by" property="updatedBy" />
+        <result column="code" property="code" />
+        <result column="name" property="name" />
+        <result column="description" property="description" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,
+        created_time,
+        updated_time,
+        created_by,
+        updated_by,
+        code, name, description
+    </sql>
+
+</mapper>

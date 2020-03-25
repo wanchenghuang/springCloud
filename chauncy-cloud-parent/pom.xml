@@ -16,6 +16,7 @@
         <module>chauncy-demos</module>
         <module>chauncy-client</module>
         <module>chauncy-gateway</module>
+        <module>chauncy-sysadmin</module>
     </modules>
 
     <parent>
