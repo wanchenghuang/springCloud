@@ -13,4 +13,5 @@ import com.chauncy.cloud.core.config.base.Service;
  */
 public interface IUsersService extends Service<UsersPo> {
 
+    UsersPo getByUniqueId(String uniqueId);
 }

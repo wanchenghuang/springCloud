@@ -1,5 +1,6 @@
 package com.chauncy.cloud.sysadmin.organization.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.chauncy.cloud.data.domain.po.organization.UserRoleRelationPo;
 import com.chauncy.cloud.data.mapper.organization.UserRoleRelationMapper;
 import com.chauncy.cloud.sysadmin.organization.service.IUserRoleRelationService;
@@ -8,6 +9,10 @@ import org.springframework.stereotype.Service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -25,4 +30,12 @@ public class UserRoleRelationServiceImpl extends AbstractService<UserRoleRelatio
  @Autowired
  private UserRoleRelationMapper mapper;
 
+    @Override
+    public Set<String> queryByUserId(String id) {
+
+        QueryWrapper<UserRoleRelationPo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("user_id", id);
+        List<UserRoleRelationPo> userRoleList = list(queryWrapper);
+        return userRoleList.stream().map(UserRoleRelationPo::getRoleId).collect(Collectors.toSet());
+    }
 }

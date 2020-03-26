@@ -3,6 +3,8 @@ package com.chauncy.cloud.sysadmin.organization.service;
 import com.chauncy.cloud.data.domain.po.organization.UserRoleRelationPo;
 import com.chauncy.cloud.core.config.base.Service;
 
+import java.util.Set;
+
 /**
  * <p>
  * 用户和角色关系表 服务类
@@ -13,4 +15,5 @@ import com.chauncy.cloud.core.config.base.Service;
  */
 public interface IUserRoleRelationService extends Service<UserRoleRelationPo> {
 
+    Set<String> queryByUserId(String id);
 }
