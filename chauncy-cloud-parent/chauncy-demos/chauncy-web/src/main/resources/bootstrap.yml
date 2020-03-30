@@ -1,7 +1,7 @@
 server:
   port: 9001
   servlet:
-    context-path: /test
+#    context-path: /test
 spring:
   application:
     name: web-test

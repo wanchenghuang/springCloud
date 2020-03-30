@@ -1,8 +1,9 @@
 package com.chauncy.cloud.common.utils;
 
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.*;
 import org.springframework.util.CollectionUtils;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -15,6 +16,20 @@ import java.util.concurrent.TimeUnit;
 public final class RedisUtil {
 
     private RedisTemplate<String, Object> redisTemplate;
+
+    private final ValueOperations<String, String> valueOperations;
+    private final HashOperations<String, String, String> hashOperations;
+    private final ListOperations<String, String> listOperations;
+    private final SetOperations<String, String> setOperations;
+    private final ZSetOperations<String, String> zSetOperations;
+
+    public RedisUtil(RedisTemplate redisTemplate) {
+        valueOperations = redisTemplate.opsForValue();
+        hashOperations = redisTemplate.opsForHash();
+        listOperations = redisTemplate.opsForList();
+        setOperations = redisTemplate.opsForSet();
+        zSetOperations = redisTemplate.opsForZSet();
+    }
 
     public void setRedisTemplate(RedisTemplate<String, Object> redisTemplate) {
         this.redisTemplate = redisTemplate;
@@ -548,4 +563,107 @@ public final class RedisUtil {
             return 0;
         }
     }
+
+
+    // ------------------- key operations begin ---------------------
+    public void delete(String key) {
+        redisTemplate.delete(key);
+    }
+
+    public void delete(Collection<String> keys) {
+        redisTemplate.delete(keys);
+    }
+
+//    public Boolean hasKey(String key) {
+//        return redisTemplate.hasKey(key);
+//    }
+
+    public Boolean expire(String key, long timeout, TimeUnit timeUnit) {
+        return redisTemplate.expire(key, timeout, timeUnit);
+    }
+
+
+    // ------------------- key operations end ---------------------
+
+
+    // ------------------- string operations begin ---------------------
+    public void set(String key, String value) {
+        valueOperations.set(key, value);
+    }
+
+    public void set(String key, String value, long timeout, TimeUnit timeUnit) {
+        valueOperations.set(key, value, timeout, timeUnit);
+    }
+
+    public void set(String key, String value, long seconds) {
+        this.set(key, value, seconds, TimeUnit.SECONDS);
+    }
+
+    public Boolean setIfAbsent(String key, String value) {
+        return valueOperations.setIfAbsent(key, value);
+    }
+
+//    public String get(String key) {
+//        return valueOperations.get(key);
+//    }
+    // ------------------ string operations end ------------------------
+
+    // ------------------- set operations begin ---------------------
+    public void add(String key, Collection<String> collection) {
+        this.add(key, collection.toArray(new String[0]));
+    }
+
+    public void add(String key, String ... values) {
+        setOperations.add(key, values);
+    }
+
+    public Set<String> members(String key) {
+        return setOperations.members(key);
+    }
+    // ------------------- set operations end ---------------------
+
+
+    // ------------------- hash operations begin ---------------------
+    public Object hGet(String key, String field) {
+        return hashOperations.get(key, field);
+    }
+    public Map<String, String> hGetAll(String key) {
+        return hashOperations.entries(key);
+    }
+    public List<String> hMultiGet(String key, Collection<String> fields) {
+        return hashOperations.multiGet(key, fields);
+    }
+
+    public void hPut(String key, String hashKey, String value) {
+        hashOperations.put(key, hashKey, value);
+    }
+
+    public void hPutAll(String key, Map<String, String> maps) {
+        hashOperations.putAll(key, maps);
+    }
+
+    public Boolean hPutIfAbsent(String key, String hashKey, String value) {
+        return hashOperations.putIfAbsent(key, hashKey, value);
+    }
+
+    public Long hDelete(String key, Object... fields) {
+        return hashOperations.delete(key, fields);
+    }
+
+    public boolean hExists(String key, String field) {
+        return hashOperations.hasKey(key, field);
+    }
+
+    public Set<String> hKeys(String key) {
+        return hashOperations.keys(key);
+    }
+
+    public Long hSize(String key) {
+        return hashOperations.size(key);
+    }
+
+    public List<String> hValues(String key) {
+        return hashOperations.values(key);
+    }
+    // ------------------- hash operations end ---------------------
 }

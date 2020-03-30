@@ -29,5 +29,6 @@ public class WebApplication extends SpringBootServletInitializer {
     public static void main(String[] args) {
         SpringApplication.run(WebApplication.class, args);
         log.info("启动成功！！！！！");
+        log.info("http://localhost:9001/doc.html");
     }
 }

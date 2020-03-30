@@ -20,7 +20,7 @@ public final class Constants {
     /**
      *  key of redis
      */
-    public static final String GATEWAY_ROUTES = "gateway_routes::";
+    public static final String GATEWAY_ROUTES = "gateway_routes";
 
     /**
      *  route of mq

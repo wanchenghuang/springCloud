@@ -19,5 +19,24 @@
             <version>2.5.14</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.chauncy.cloud</groupId>
+            <artifactId>chauncy-config</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.chauncy.cloud</groupId>
+            <artifactId>chauncy-framework</artifactId>
+            <version>1.0-SNAPSHOT</version>
+<!--            <exclusions>-->
+                <!--1. webflux与webmvc不兼容，否则会项目启动不起来-->
+<!--                <exclusion>-->
+<!--                    <groupId>org.springframework</groupId>-->
+<!--                    <artifactId>spring-webmvc</artifactId>-->
+<!--                </exclusion>-->
+<!--            </exclusions>-->
+        </dependency>
+
     </dependencies>
 </project>

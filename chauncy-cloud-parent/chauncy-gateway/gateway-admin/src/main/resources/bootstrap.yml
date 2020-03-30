@@ -1,5 +1,5 @@
 server:
-  port: ${SERVER_PORT:8881}
+  port: ${SERVER_PORT:9003}
 spring:
   application:
     name: gateway-admin

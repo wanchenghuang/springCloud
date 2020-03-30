@@ -253,4 +253,17 @@ public class JSONUtils {
 
     }
 
+    /**
+     * json 字符串转为实体
+     *
+     * @param json json 字符串
+     * @param clazz 实体class
+     * @param <T>
+     * @return
+     */
+    @SneakyThrows
+    public static <T> T toBean(@NonNull String json, Class<T> clazz) {
+        return objectMapper.readValue(json, clazz);
+    }
+
 }

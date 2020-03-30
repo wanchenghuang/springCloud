@@ -5,6 +5,7 @@ import com.chauncy.cloud.data.domain.dto.gateway.search.SearchRoutesDto;
 import com.chauncy.cloud.data.domain.po.gateway.GatewayRoutePo;
 import com.chauncy.cloud.data.domain.vo.gateway.SearchRoutesVo;
 import com.chauncy.cloud.data.mapper.base.IBaseMapper;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -21,4 +22,7 @@ public interface GatewayRouteMapper extends IBaseMapper<GatewayRoutePo> {
     List<SearchRoutesVo> searchRoutes(SearchRoutesDto searchRoutesDto);
 
     SearchRoutesVo getRouteByConditions(GetRouteDto getRouteDto);
+
+    @Select("delete from sc_gateway where id = #{a}")
+    GatewayRoutePo selectByIds(Long a);
 }

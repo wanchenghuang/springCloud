@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * @Author cheng
  * @create 2020-03-19 22:16

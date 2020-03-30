@@ -32,6 +32,7 @@ public class FeignConsumerApplication {
     public static void main(String[] args) {
         SpringApplication.run(FeignConsumerApplication.class, args);
         log.info("启动成功！！");
+        log.info("http://localhost:9002/doc.html");
     }
 
     /*@Bean

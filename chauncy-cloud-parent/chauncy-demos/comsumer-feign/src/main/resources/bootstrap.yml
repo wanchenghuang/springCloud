@@ -1,7 +1,7 @@
 server:
   port: 9002
   servlet:
-    context-path: /feign
+#    context-path: /feign
 spring:
   application:
     name: feign-test

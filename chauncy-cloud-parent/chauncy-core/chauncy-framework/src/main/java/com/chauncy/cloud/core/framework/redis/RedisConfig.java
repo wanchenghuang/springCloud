@@ -68,7 +68,7 @@ public class RedisConfig extends CachingConfigurerSupport {
      */
     @Bean(name = "redisUtil")
     public RedisUtil redisUtil(RedisTemplate<String, Object> redisTemplate) {
-        RedisUtil redisUtil = new RedisUtil();
+        RedisUtil redisUtil = new RedisUtil(redisTemplate);
         redisUtil.setRedisTemplate(redisTemplate);
         return redisUtil;
     }

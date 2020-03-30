@@ -33,5 +33,6 @@ public class GatewayAdminApplication extends SpringBootServletInitializer {
     public static void main(String[] args) {
         SpringApplication.run(GatewayAdminApplication.class, args);
         log.info("启动成功！！！！！");
+        log.info("http://localhost:9003/doc.html");
     }
 }

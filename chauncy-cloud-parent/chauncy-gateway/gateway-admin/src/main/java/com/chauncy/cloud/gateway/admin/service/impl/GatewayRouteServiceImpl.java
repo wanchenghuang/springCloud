@@ -8,10 +8,8 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.chauncy.cloud.common.constant.Constants;
 import com.chauncy.cloud.common.enums.system.exception.Code;
 import com.chauncy.cloud.common.exception.BusinessException;
-import com.chauncy.cloud.common.utils.BeanTransferUtils;
-import com.chauncy.cloud.common.utils.GuavaUtils;
-import com.chauncy.cloud.common.utils.JSONUtils;
 import com.chauncy.cloud.common.utils.RedisUtil;
+import com.chauncy.cloud.core.config.base.AbstractService;
 import com.chauncy.cloud.data.domain.dto.gateway.get.GetRouteDto;
 import com.chauncy.cloud.data.domain.dto.gateway.save.FilterDefinitionDto;
 import com.chauncy.cloud.data.domain.dto.gateway.save.PredicateDefinitionDto;
@@ -22,20 +20,18 @@ import com.chauncy.cloud.data.domain.vo.gateway.SearchRoutesVo;
 import com.chauncy.cloud.data.mapper.gateway.GatewayRouteMapper;
 import com.chauncy.cloud.gateway.admin.event.EventSender;
 import com.chauncy.cloud.gateway.admin.service.IGatewayRouteService;
-import com.chauncy.cloud.core.config.base.AbstractService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
 import com.google.gson.Gson;
-import org.apache.commons.lang.StringUtils;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.FilterDefinition;
 import org.springframework.cloud.gateway.handler.predicate.PredicateDefinition;
 import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.stereotype.Service;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
@@ -88,14 +84,14 @@ public class GatewayRouteServiceImpl extends AbstractService<GatewayRouteMapper,
         List<String> routIds = Lists.newArrayList();
         List<String> uris = Lists.newArrayList();
         List<GatewayRoutePo> routePos = mapper.selectList(null);
-        GatewayRoutePo gatewayRoutePo = new GatewayRoutePo();
+//        GatewayRoutePo gatewayRoutePo = new GatewayRoutePo();
 
-        if (saveOrUpdateGatewayRoute.getId() != 0 || saveOrUpdateGatewayRoute.getId() != null){
-            if (gatewayRoutePo ==null ){
+        if (saveOrUpdateGatewayRoute.getId() != 0){
+            gatewayRoute = mapper.selectById(saveOrUpdateGatewayRoute.getId());
+            if (gatewayRoute ==null ){
                 throw new BusinessException(Code.ERROR,String.format("数据库不存在ID为[%s]的路由！",saveOrUpdateGatewayRoute.getId()));
             }else {
-                gatewayRoutePo = mapper.selectById(saveOrUpdateGatewayRoute.getId());
-                GatewayRoutePo finalGatewayRoutePo = gatewayRoutePo;
+                GatewayRoutePo finalGatewayRoutePo = gatewayRoute;
                 routIds = routePos.stream().map(a->a.getRouteId()).filter(b->!b.equals(finalGatewayRoutePo.getRouteId())).collect(Collectors.toList());
                 uris = routePos.stream().map(a->a.getUri()).filter(b->!b.equals(finalGatewayRoutePo.getUri())).collect(Collectors.toList());
                 if (routIds.contains(saveOrUpdateGatewayRoute.getRouteId())){
@@ -117,15 +113,16 @@ public class GatewayRouteServiceImpl extends AbstractService<GatewayRouteMapper,
                 throw new BusinessException(Code.ERROR,String.format("网关uri:【%s】不能重复！",saveOrUpdateGatewayRoute.getUri()));
             }
             gatewayRoute = saveOrUpdateGatewayRoute.toPo(GatewayRoutePo.class);
+            gatewayRoute.setId(null);
             isSuccess = this.save(gatewayRoute);
         }
         if (isSuccess) {
-            if (saveOrUpdateGatewayRoute.getId() != null || saveOrUpdateGatewayRoute.getId() != 0){
-                redisUtil.del(GATEWAY_ROUTES+gatewayRoutePo.getRouteId());
+            if (saveOrUpdateGatewayRoute.getId() != 0){
+                redisUtil.hDelete(GATEWAY_ROUTES,gatewayRoute.getRouteId());
             }
             RouteDefinition routeDefinition = gatewayRouteToRouteDefinition(gatewayRoute);
             // 转化为gateway需要的类型，缓存到redis, 并事件通知各网关应用
-            redisUtil.set(GATEWAY_ROUTES+gatewayRoute.getRouteId(), routeDefinition);
+            redisUtil.hPut(GATEWAY_ROUTES,gatewayRoute.getRouteId(), new Gson().toJson(routeDefinition));
             //gatewayRouteCache.put(gatewayRoute.getRouteId(),routeDefinition);
             eventSender.send(Constants.ROUTING_KEY, routeDefinition);
         }
@@ -143,9 +140,12 @@ public class GatewayRouteServiceImpl extends AbstractService<GatewayRouteMapper,
     @PostConstruct
     public boolean overload() {
         List<GatewayRoutePo> gatewayRoutes = this.list(new QueryWrapper<>());
-        gatewayRoutes.forEach(gatewayRoute ->
-                redisUtil.set(GATEWAY_ROUTES+gatewayRoute.getRouteId(), gatewayRouteToRouteDefinition(gatewayRoute))
+//        gatewayRoutes.forEach(gatewayRoute ->
+//                redisUtil.set(GATEWAY_ROUTES+gatewayRoute.getRouteId(), gatewayRouteToRouteDefinition(gatewayRoute))
 //                gatewayRouteCache.put(gatewayRoute.getRouteId(), new Gson().toJson(gatewayRouteToRouteDefinition(gatewayRoute)))
+//        );
+        gatewayRoutes.forEach(gatewayRoute ->
+                redisUtil.hset(GATEWAY_ROUTES,gatewayRoute.getRouteId(), new Gson().toJson(gatewayRouteToRouteDefinition(gatewayRoute)))
         );
         log.info("全局初使化网关路由成功!");
         return true;
@@ -206,14 +206,14 @@ public class GatewayRouteServiceImpl extends AbstractService<GatewayRouteMapper,
         }
         List<Long> idList = Arrays.asList(routIds);
         idList.forEach(a->{
-            GatewayRoutePo gatewayRoutePo = mapper.selectById(a);
+            GatewayRoutePo gatewayRoutePo = mapper.selectByIds(a);
             if (gatewayRoutePo == null){
                 throw new BusinessException(Code.ERROR,String.format("数据库不存在id:[%s]的路由",a));
             }
         });
         idList.forEach(a->{
             GatewayRoutePo gatewayRoutePo = mapper.selectById(a);
-            redisUtil.del(GATEWAY_ROUTES+gatewayRoutePo.getRouteId());
+            redisUtil.hDelete(GATEWAY_ROUTES,gatewayRoutePo.getRouteId());
         });
 
         int result = mapper.deleteBatchIds(idList);
