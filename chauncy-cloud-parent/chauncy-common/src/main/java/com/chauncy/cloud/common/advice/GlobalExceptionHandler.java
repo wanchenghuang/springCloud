@@ -5,6 +5,7 @@ import com.chauncy.cloud.common.enums.system.exception.Code;
 import com.chauncy.cloud.common.exception.BusinessException;
 import com.chauncy.cloud.common.exception.FeignException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.multipart.MultipartException;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -109,5 +111,17 @@ public class GlobalExceptionHandler {
     public Result handleException(Exception e, HttpServletRequest request) {
         log.error("服务繁忙", e);
         return Result.error(Code.ERROR, request.getRequestURI());
+    }
+
+    @ExceptionHandler(value = {DuplicateKeyException.class})
+    public Result duplicateKeyException(DuplicateKeyException ex) {
+        log.error("primary key duplication exception:{}", ex.getMessage());
+        return Result.error(Code.DUPLICATE_PRIMARY_KEY);
+    }
+
+    @ExceptionHandler(value = {MultipartException.class})
+    public Result uploadFileLimitException(MultipartException ex) {
+        log.error("upload file size limit:{}", ex.getMessage());
+        return Result.error(Code.UPLOAD_FILE_SIZE_LIMIT);
     }
 }

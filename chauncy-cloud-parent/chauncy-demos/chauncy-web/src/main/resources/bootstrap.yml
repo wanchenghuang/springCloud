@@ -1,6 +1,6 @@
 server:
   port: 9001
-  servlet:
+#  servlet:
 #    context-path: /test
 spring:
   application:

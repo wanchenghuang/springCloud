@@ -19,7 +19,19 @@ public enum Code implements BaseCode {
     UNSUPPORTED_MEDIA_TYPE(415, "不支持当前媒体类型"),
 
     ERROR(500, "系统繁忙"),
-    FEIGN_CALL_ERROR(517, "服务间调用出错");
+    FEIGN_CALL_ERROR(517, "服务间调用出错"),
+
+    GATEWAY_NOT_FOUND_SERVICE(010404, "服务未找到"),
+    GATEWAY_ERROR(010500, "网关异常"),
+    GATEWAY_CONNECT_TIME_OUT(010002, "网关超时"),
+
+    ARGUMENT_NOT_VALID(020000, "请求参数校验不通过"),
+    INVALID_TOKEN(020001, "无效token"),
+    UPLOAD_FILE_SIZE_LIMIT(020010, "上传文件大小超过限制"),
+
+    DUPLICATE_PRIMARY_KEY(030000,"唯一键冲突"),
+
+    ;
 
     private final int code;
 

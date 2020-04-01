@@ -73,6 +73,10 @@ public class Result<T> implements Serializable {
         return error(Code.ERROR, message, null);
     }
 
+    public static <T> Result<T> error() {
+        return error(Code.ERROR, null);
+    }
+
     public static <T> Result<T> error(BaseCode code) {
         return error(code, null);
     }
