@@ -24,10 +24,10 @@ public class BusReceiver {
         log.info("Received Message:<{}>", routeDefinition);
         // 动态添加路由
         //待实现动态删除路由/修改路由
-//        routeService.save(routeDefinition);
+        routeService.save(routeDefinition);
 
-        //动态刷新
-        routeService.refresh();
+        //动态刷新，影响效率
+//        routeService.refresh();
 
     }
 }

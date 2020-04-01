@@ -74,9 +74,11 @@ public class RouteServiceImpl implements IRouteService,ApplicationEventPublisher
 
     @Override
     public Collection<RouteDefinition> getRouteDefinitions() {
-        Map<String, RouteDefinition> allRoutes = new HashMap<>();
-        redisUtil.hGetAll(GATEWAY_ROUTES).forEach((k,v)->allRoutes.put(k,JSONUtils.toBean(v,RouteDefinition.class)));
-        return allRoutes.values();
+        //影响效率
+//        Map<String, RouteDefinition> allRoutes = new HashMap<>();
+//        redisUtil.hGetAll(GATEWAY_ROUTES).forEach((k,v)->allRoutes.put(k,JSONUtils.toBean(v,RouteDefinition.class)));
+//        return allRoutes.values();
+        return routeDefinitionMaps.values();
     }
 
     @Override

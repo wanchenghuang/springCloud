@@ -25,7 +25,7 @@ public final class Constants {
     /**
      *  route 刷新主题
      */
-    public static final String GATEWAY_ROUTE_REFRESH_TOPIC = "gateway-route-refresh-topic";
+//    public static final String GATEWAY_ROUTE_REFRESH_TOPIC = "gateway-route-refresh-topic";
 
     /**
      *  route of mq
