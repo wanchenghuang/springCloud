@@ -39,6 +39,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
 import static com.chauncy.cloud.common.constant.Constants.GATEWAY_ROUTES;
@@ -117,10 +118,12 @@ public class GatewayRouteServiceImpl extends AbstractService<GatewayRouteMapper,
             isSuccess = this.save(gatewayRoute);
         }
         if (isSuccess) {
+            RouteDefinition routeDefinition = gatewayRouteToRouteDefinition(gatewayRoute);
+
             if (saveOrUpdateGatewayRoute.getId() != 0){
                 redisUtil.hDelete(GATEWAY_ROUTES,gatewayRoute.getRouteId());
             }
-            RouteDefinition routeDefinition = gatewayRouteToRouteDefinition(gatewayRoute);
+
             // 转化为gateway需要的类型，缓存到redis, 并事件通知各网关应用
             redisUtil.hPut(GATEWAY_ROUTES,gatewayRoute.getRouteId(), new Gson().toJson(routeDefinition));
             //gatewayRouteCache.put(gatewayRoute.getRouteId(),routeDefinition);
@@ -197,6 +200,9 @@ public class GatewayRouteServiceImpl extends AbstractService<GatewayRouteMapper,
      **/
     @Override
     public boolean batchDel(String ids) {
+
+        AtomicBoolean isSuccess = new AtomicBoolean(false);
+
         Long[] routIds = null;
         try {
             routIds = Convert.toLongArray(ids);
@@ -206,19 +212,24 @@ public class GatewayRouteServiceImpl extends AbstractService<GatewayRouteMapper,
         }
         List<Long> idList = Arrays.asList(routIds);
         idList.forEach(a->{
-            GatewayRoutePo gatewayRoutePo = mapper.selectByIds(a);
+            GatewayRoutePo gatewayRoutePo = mapper.selectById(a);
             if (gatewayRoutePo == null){
                 throw new BusinessException(Code.ERROR,String.format("数据库不存在id:[%s]的路由",a));
             }
         });
         idList.forEach(a->{
             GatewayRoutePo gatewayRoutePo = mapper.selectById(a);
-            redisUtil.hDelete(GATEWAY_ROUTES,gatewayRoutePo.getRouteId());
+            if (mapper.deleteById(a) > 0) {
+                redisUtil.hDelete(GATEWAY_ROUTES, gatewayRoutePo.getRouteId());
+                RouteDefinition routeDefinition = gatewayRouteToRouteDefinition(gatewayRoutePo);
+                eventSender.send(Constants.ROUTING_KEY, routeDefinition);
+                isSuccess.set(true);
+            }
         });
 
-        int result = mapper.deleteBatchIds(idList);
+//        int result = mapper.deleteBatchIds(idList);
 
-        return result > 0 ? true : false;
+        return isSuccess.get();
     }
 
     /**

@@ -3,16 +3,21 @@ package com.chauncy.cloud.gateway.web.service.impl;
 import com.chauncy.cloud.common.utils.JSONUtils;
 import com.chauncy.cloud.common.utils.RedisUtil;
 import com.chauncy.cloud.gateway.web.service.IRouteService;
-import com.google.common.collect.Lists;
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.gateway.event.RefreshRoutesEvent;
 import org.springframework.cloud.gateway.route.RouteDefinition;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.ApplicationEventPublisherAware;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import javax.annotation.PostConstruct;
-import javax.security.auth.callback.Callback;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.chauncy.cloud.common.constant.Constants.GATEWAY_ROUTES;
 
@@ -25,12 +30,30 @@ import static com.chauncy.cloud.common.constant.Constants.GATEWAY_ROUTES;
 @Service
 @Slf4j
 @Transactional(rollbackFor = Exception.class)
-public class RouteServiceImpl implements IRouteService {
+public class RouteServiceImpl implements IRouteService,ApplicationEventPublisherAware {
 
     @Autowired
     private RedisUtil redisUtil;
 
     private Map<String,RouteDefinition> routeDefinitionMaps = new HashMap<>();
+
+    private ApplicationEventPublisher publisher;
+
+
+    @Override
+    public void setApplicationEventPublisher(@NonNull ApplicationEventPublisher publisher) {
+        Assert.notNull(publisher, "publisher may not be null");
+        this.publisher = publisher;
+    }
+
+    @Override
+    public void refresh() {
+        //这个this.publisher.publishEvent(new RefreshRoutesEvent(this));是spring 自带的方法
+        //执行这个方法的瞬间会去找所有继承了RouteDefinitionRepository接口的类中的getRouteDefinitions方法
+        //所以本项目执行的是RedisRouteDefinitionRepository.getRouteDefinitions
+        this.publisher.publishEvent(new RefreshRoutesEvent(this));
+        log.info("refresh the route...");
+    }
 
     //从reids获取所有路由信息
     @PostConstruct
@@ -51,7 +74,9 @@ public class RouteServiceImpl implements IRouteService {
 
     @Override
     public Collection<RouteDefinition> getRouteDefinitions() {
-        return routeDefinitionMaps.values();
+        Map<String, RouteDefinition> allRoutes = new HashMap<>();
+        redisUtil.hGetAll(GATEWAY_ROUTES).forEach((k,v)->allRoutes.put(k,JSONUtils.toBean(v,RouteDefinition.class)));
+        return allRoutes.values();
     }
 
     @Override
@@ -67,4 +92,5 @@ public class RouteServiceImpl implements IRouteService {
         log.info("删除路由1条：{},目前路由共{}条", routeId, routeDefinitionMaps.size());
         return true;
     }
+
 }

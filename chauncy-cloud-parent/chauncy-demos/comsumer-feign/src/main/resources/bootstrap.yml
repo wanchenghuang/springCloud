@@ -1,6 +1,6 @@
 server:
   port: 9002
-  servlet:
+#  servlet:
 #    context-path: /feign
 spring:
   application:

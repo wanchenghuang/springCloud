@@ -1,7 +1,10 @@
 package com.chauncy.cloud.gateway.web.config;
 
 import com.alibaba.fastjson.support.spring.FastJsonRedisSerializer;
+import com.chauncy.cloud.common.constant.Constants;
 import com.chauncy.cloud.common.utils.RedisUtil;
+import com.chauncy.cloud.gateway.web.routes.RedisRouteRefreshListener;
+import com.chauncy.cloud.gateway.web.service.IRouteService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
@@ -12,6 +15,8 @@ import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.cache.RedisCacheWriter;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.listener.ChannelTopic;
+import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
@@ -80,6 +85,56 @@ public class RedisConfig extends CachingConfigurerSupport {
                 .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(redisTemplate.getValueSerializer()));
         return new RedisCacheManager(redisCacheWriter, redisCacheConfiguration);
     }
+
+    /**
+     * @Author chauncy
+     * @Date 2020-03-31 21:59
+     * @param  routeService
+     * @return
+     *      将redis 路由动态更新监听注册成bean
+     **/
+    @Bean
+    public RedisRouteRefreshListener redisRouteRefreshListener(IRouteService routeService) {
+        log.info("new RedisMessageListener");
+        return new RedisRouteRefreshListener(routeService);
+    }
+
+    /**
+     * @Author chauncy
+     * @Date 2020-03-31 22:00
+     * @param  connectionFactory
+     * @param  routeRefreshListener
+     * @return
+     *
+     *       将redis 路由动态更新监听加入监听容器
+     **/
+    @Bean
+    public RedisMessageListenerContainer redisMessageListenerContainer(
+            RedisConnectionFactory connectionFactory,
+            RedisRouteRefreshListener routeRefreshListener) {
+        RedisMessageListenerContainer container = new RedisMessageListenerContainer();
+        container.setConnectionFactory(connectionFactory);
+
+        container.addMessageListener(routeRefreshListener, refreshTopic());
+        log.info("init RedisMessageListenerContainer and refreshTopic: {}", refreshTopic());
+        return container;
+    }
+
+    /**
+     * @Author chauncy
+     * @Date 2020-03-31 22:01
+     * @param
+     * @return
+     *       redis 路由动态更新监听主题
+     **/
+    @Bean
+    public ChannelTopic refreshTopic() {
+        return new ChannelTopic(Constants.GATEWAY_ROUTE_REFRESH_TOPIC);
+    }
+
+
+
+
 
     /**
      * 二者选其一即可

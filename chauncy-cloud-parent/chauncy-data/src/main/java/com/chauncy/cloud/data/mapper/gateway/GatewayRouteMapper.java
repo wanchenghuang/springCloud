@@ -23,6 +23,4 @@ public interface GatewayRouteMapper extends IBaseMapper<GatewayRoutePo> {
 
     SearchRoutesVo getRouteByConditions(GetRouteDto getRouteDto);
 
-    @Select("delete from sc_gateway where id = #{a}")
-    GatewayRoutePo selectByIds(Long a);
 }

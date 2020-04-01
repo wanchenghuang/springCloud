@@ -40,5 +40,12 @@ public interface IRouteService {
      **/
     boolean delete(String routeId);
 
-
+    /**
+     * @Author chauncy
+     * @Date 2020-03-31 21:55
+     * @param
+     * @return
+     *       redis 路由动态更新监听
+     **/
+    void refresh();
 }
