@@ -18,6 +18,7 @@
         <module>chauncy-gateway</module>
         <module>chauncy-sysadmin</module>
         <module>chauncy-auth</module>
+        <module>chauncy-thread</module>
     </modules>
 
     <parent>
