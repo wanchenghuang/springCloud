@@ -3,18 +3,13 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>chauncy-cloud-parent</artifactId>
+        <artifactId>chauncy-thread</artifactId>
         <groupId>com.chauncy.cloud</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>chauncy-thread</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>thread-primary</module>
-        <module>thread-common</module>
-    </modules>
+    <artifactId>thread-common</artifactId>
 
 
 </project>
