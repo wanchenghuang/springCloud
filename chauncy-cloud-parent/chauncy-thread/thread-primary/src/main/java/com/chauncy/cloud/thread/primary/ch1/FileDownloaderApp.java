@@ -19,7 +19,7 @@ import java.nio.channels.WritableByteChannel;
  */
 public class FileDownloaderApp {
     public static void main(String[] args) {
-        args = new String[]{"http://www.bo2hs.com:8007/andorid/cybh_v_1_0.apk","http://www.bo2hs.com:8007/andorid/chauncy-test.ez"};
+        args = new String[]{"http://www.bo2h.com:8007/andorid/cybh_v_1_0.apk","http://www.bo2hs.com:8007/andorid/chauncy-test.ez"};
         Thread downloaderThread = null;
         for (String url : args) {
             // 创建文件下载器线程
