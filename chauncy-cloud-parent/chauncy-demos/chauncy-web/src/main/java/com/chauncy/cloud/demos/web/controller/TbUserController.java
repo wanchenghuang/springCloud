@@ -153,4 +153,16 @@ public class TbUserController extends BaseController {
         return success(service.queryUser(username));
     }
 
+    /**
+     * @Author chauncy
+     * @Date 2020-04-06 18:02
+     * @param
+     * @return
+     *       测试负载均衡
+     **/
+    @GetMapping("/web/lb")
+    public String getWebLb(){
+        return "9001";
+    }
+
 }

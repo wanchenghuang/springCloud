@@ -80,7 +80,7 @@ spring:
             merge-sql: false
           wall:
             config:
-              multi-statement-allow: tru
+              multi-statement-allow: true
 
 logging:
   level:

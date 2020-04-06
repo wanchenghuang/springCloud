@@ -21,6 +21,8 @@ import java.util.Map;
 /**
  * @Author cheng
  * @create 2020-03-06 14:37
+ *
+ * 数据源的配置和切换最好不要放在公共模块，因为有些模块可能不用数据源，启动会导致包报找不到数据源问题
  */
 @Configuration
 public class DynamicDataSourceConfig {

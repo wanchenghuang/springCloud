@@ -1,0 +1,18 @@
+server:
+  port: 9007
+spring:
+  application:
+    name: ribbon-consumer
+  cloud:
+    nacos:
+      discovery:
+        server-addr: ${REGISTER_HOST:39.108.136.61}:${REGISTER_PORT:8848}
+      config:
+        server-addr: ${REGISTER_HOST:39.108.136.61}:${REGISTER_PORT:8848}
+        file-extension: yml
+    sentinel:
+      transport:
+        dashboard: ${SENTINEL_DASHBOARD_HOST:39.108.136.61}:${SENTINEL_DASHBOARD_PORT:8021}
+    bus:
+      trace:
+        enabled: true
