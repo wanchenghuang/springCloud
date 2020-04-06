@@ -18,7 +18,7 @@ import java.util.List;
  *
  * 测试feign调用
  */
-@FeignClient(name = "web-test",path = "/test",configuration = MyFeignClientConfig.class)
+@FeignClient(name = "web-test",/*path = "/test",*/configuration = MyFeignClientConfig.class)
 public interface TestFeignClient {
 
     @GetMapping("/tb-user-po/query-all-user")
@@ -29,4 +29,17 @@ public interface TestFeignClient {
     @PostMapping("/tb-user-po/search-users")
 //    String searchUsers(@RequestBody SearchUsersDto searchUsersDto);
     Result<PageInfo<SearchUsersVo>> searchUsers(@RequestBody SearchUsersDto searchUsersDto);
+
+    /**
+     * @Author chauncy
+     * @Date 2020-04-06 20:30
+     * @param
+     * @return
+     *   默认feign客户端只等待一秒钟，但是服务端处理需要超过1秒钟导致feign客户端直接返回错误
+     *
+     *   需要设置feign客户端超时，由ribbon控制
+     *
+     **/
+    @GetMapping("/tb-user-po/web/feign/timeout")
+    String webFeignTimeout();
 }

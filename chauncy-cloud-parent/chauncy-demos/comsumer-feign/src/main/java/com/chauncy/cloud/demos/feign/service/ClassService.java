@@ -16,4 +16,6 @@ public interface ClassService {
     List<SearchUsersVo> queryAllUsers();
 
     PageInfo<SearchUsersVo> searchUsers(SearchUsersDto searchUsersDto);
+
+    String webFeignTimeout();
 }

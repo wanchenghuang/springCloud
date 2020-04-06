@@ -5,13 +5,13 @@ import com.chauncy.cloud.common.enums.system.exception.Code;
 import com.chauncy.cloud.common.exception.FeignException;
 import com.chauncy.cloud.common.utils.JSONUtils;
 import com.google.gson.*;
+import feign.Logger;
 import feign.Response;
 import feign.Util;
 import feign.codec.Decoder;
 import feign.codec.Encoder;
 import feign.codec.ErrorDecoder;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
@@ -46,7 +46,6 @@ public class MyFeignClientConfig {
 
     class MyErrorDecoder implements ErrorDecoder {
 
-        private final Logger logger = LoggerFactory.getLogger(MyErrorDecoder.class);
 
         @Override
         public Exception decode(String methodKey, Response response) {
@@ -54,9 +53,9 @@ public class MyFeignClientConfig {
             try {
                 String body = Util.toString(response.body().asReader());
                 result = JSONUtils.parseObject(body, Result.class);
-                logger.error("\n ===== feign 调用异常, 调用方法[{}] \n ===== 返回信息[{}]", methodKey, body);
+                log.error("\n ===== feign 调用异常, 调用方法[{}] \n ===== 返回信息[{}]", methodKey, body);
             } catch (IOException e) {
-                logger.error("feign io 异常", e);
+                log.error("feign io 异常", e);
             }
             return new FeignException(result);
         }
@@ -93,6 +92,19 @@ public class MyFeignClientConfig {
         HttpMessageConverter jacksonConverter = new GsonHttpMessageConverter(GSON);
         ObjectFactory<HttpMessageConverters> objectFactory = () -> new HttpMessageConverters(jacksonConverter);
         return new ResponseEntityDecoder(new SpringDecoder(objectFactory));
+    }
+
+    /**
+     * @Author chauncy
+     * @Date 2020-04-06 20:48
+     * @param
+     * @return
+     *   日志级别
+     **/
+    @Bean
+    Logger.Level feignLoggerLevel(){
+
+        return Logger.Level.FULL;
     }
 
 }

@@ -42,4 +42,9 @@ public class ClassServiceImpl implements ClassService {
         Result<PageInfo<SearchUsersVo>> result = testFeignClient.searchUsers(searchUsersDto);
         return result.getData();
     }
+
+    @Override
+    public String webFeignTimeout() {
+        return testFeignClient.webFeignTimeout();
+    }
 }

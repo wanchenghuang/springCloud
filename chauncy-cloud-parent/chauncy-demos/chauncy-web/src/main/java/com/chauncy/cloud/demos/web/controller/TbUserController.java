@@ -22,6 +22,7 @@ import com.chauncy.cloud.common.base.BaseController;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * <p>
@@ -162,6 +163,26 @@ public class TbUserController extends BaseController {
      **/
     @GetMapping("/web/lb")
     public String getWebLb(){
+        return "9001";
+    }
+
+    /**
+     * @Author chauncy
+     * @Date 2020-04-06 20:16
+     * @param
+     * @return
+     *    测试调用超时
+     **/
+    @GetMapping("/web/feign/timeout")
+    @ApiOperation("测试调用超时")
+    public String webFeignTimeout(){
+        //暂停几秒钟线程
+        try {
+            TimeUnit.SECONDS.sleep(3);
+        }catch (InterruptedException e){
+            e.printStackTrace();
+        }
+
         return "9001";
     }
 
