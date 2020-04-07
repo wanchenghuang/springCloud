@@ -16,6 +16,8 @@
         <module>chauncy-web</module>
         <module>comsumer-feign</module>
         <module>chauncy-ribbon</module>
+        <module>chauncy-provider-hystrix-payment8001</module>
+        <module>chauncy-comsumer-feign-hystrix-order80</module>
     </modules>
 
     <dependencies>
