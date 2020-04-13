@@ -116,6 +116,7 @@ logging:
   level:
     com.springboot.cloud: debug
     java.sql.PreparedStatement: debug
+    com.chauncy.cloud: debug
   path: logs/
   file:
     max-size: 1GB

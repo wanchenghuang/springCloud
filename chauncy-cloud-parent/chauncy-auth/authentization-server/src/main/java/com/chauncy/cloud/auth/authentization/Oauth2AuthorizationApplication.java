@@ -20,7 +20,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwaggerBootstrapUI
 @Slf4j
 @EnableDiscoveryClient
-@EnableFeignClients
+@EnableFeignClients(basePackages = {"com.chauncy.cloud.client"})
 @EnableMethodCache(basePackages = "com.chauncy.cloud")
 @EnableCreateCacheAnnotation
 public class Oauth2AuthorizationApplication {
