@@ -108,7 +108,7 @@ jetcache:
       host: ${REDIS_HOST:39.108.136.61}
       port: ${REDIS_PORT:6386}
       password: ${REDIS_PASSWORD:w+.8?2267}
-      database: 2
+      database: 1
 
 logging:
   level:

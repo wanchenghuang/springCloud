@@ -15,6 +15,7 @@ spring:
       pool:
         max-active: 300
     password: ${REDIS_PASSWORD:w+.8?2267}
+    database: 1
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -42,7 +43,7 @@ spring:
 jetcache:
   statIntervalMinutes: 15
   areaInCacheName: false
-  hidePackages: com.springboot.cloud
+  hidePackages: com.chauncy.cloud
   local:
     # 默认2小时本地缓存
     default:
@@ -66,7 +67,7 @@ jetcache:
     # 默认2小时的远程缓存
     default:
       type: redis
-      expireAfterWriteInMillis: 43200000
+      expireAfterWriteInMillis: 60000
       keyConvertor: fastjson
       valueEncoder: kryo
       valueDecoder: kryo
@@ -77,6 +78,7 @@ jetcache:
       host: ${REDIS_HOST:39.108.136.61}
       port: ${REDIS_PORT:6386}
       password: ${REDIS_PASSWORD:w+.8?2267}
+      database: 1
     # 长时远程緩存，主要用于要求时效要求一般的集中式缓存
     longTime:
       type: redis
@@ -91,6 +93,7 @@ jetcache:
       host: ${REDIS_HOST:39.108.136.61}
       port: ${REDIS_PORT:6386}
       password: ${REDIS_PASSWORD:w+.8?2267}
+      database: 1
     # 短時远程緩存，主要用于要求时效较高的集中式缓存
     shortTime:
       type: redis
@@ -105,6 +108,7 @@ jetcache:
       host: ${REDIS_HOST:39.108.136.61}
       port: ${REDIS_PORT:6386}
       password: ${REDIS_PASSWORD:w+.8?2267}
+      database: 1
 
 management:
   endpoints:

@@ -23,11 +23,11 @@ public class AutoGeneratorUtils {
     private AutoGeneratorUtils() {
     }
 
-    public static void main(String args[]){
-
-        autoGenerator("root","%dt6$#@%s","organization","sc_admin",
-                "users","39.108.136.61",8386L);
-    }
+//    public static void main(String args[]){
+//
+//        autoGenerator("root","%dt6$#@%s","organization","sc_admin",
+//                "users","39.108.136.61",8386L);
+//    }
 
     //参数 username/password/packageName/dataBaseName/tableName/url
     //常量 user.dir/targetModel/ /src/main/java /entityName /xmlName /controllerName

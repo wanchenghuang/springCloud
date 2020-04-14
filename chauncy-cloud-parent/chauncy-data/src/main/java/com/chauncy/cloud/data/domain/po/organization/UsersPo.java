@@ -1,13 +1,12 @@
 package com.chauncy.cloud.data.domain.po.organization;
 
 import com.baomidou.mybatisplus.annotation.*;
-import com.chauncy.cloud.data.domain.po.BasePo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -23,9 +22,9 @@ import java.util.Set;
 @Accessors(chain = true)
 @TableName("users")
 @ApiModel(value = "UsersPo对象", description = "用户表")
-public class UsersPo {
+public class UsersPo implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 220401161187822517L;
 
     @ApiModelProperty(value = "id")
     @TableId(type = IdType.ID_WORKER_STR)

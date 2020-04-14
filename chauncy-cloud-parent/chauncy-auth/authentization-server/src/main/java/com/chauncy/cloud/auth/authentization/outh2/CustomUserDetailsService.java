@@ -10,7 +10,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.oauth2.provider.endpoint.TokenEndpoint;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
@@ -53,8 +52,7 @@ public class CustomUserDetailsService implements UserDetailsService {
      * @return
      */
     protected Set<GrantedAuthority> obtainGrantedAuthorities(UsersPo user) {
-        Set<RolesPo
-                > roles = roleService.queryUserRolesByUserId(user.getId());
+        Set<RolesPo> roles = roleService.queryUserRolesByUserId(user.getId());
         log.info("user:{},roles:{}", user.getUsername(), roles);
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getCode())).collect(Collectors.toSet());
     }
