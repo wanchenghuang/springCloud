@@ -56,7 +56,7 @@ jetcache:
 
 logging:
   level:
-    com.springboot.cloud: debug
+    com.chauncy.cloud: debug
     org.springframework.web: debug
     org.springframework.security: debug
   path: logs/

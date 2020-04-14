@@ -2,6 +2,7 @@ package com.chauncy.cloud.client.organization;
 
 import com.chauncy.cloud.client.config.MyFeignClientConfig;
 import com.chauncy.cloud.common.base.Result;
+import com.chauncy.cloud.data.domain.po.organization.ResourcePo;
 import com.chauncy.cloud.data.domain.po.organization.RolesPo;
 import com.chauncy.cloud.data.domain.po.organization.UsersPo;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -23,5 +24,11 @@ public interface OrganizationClient {
 
     @GetMapping(value = "/role/user/{userId}")
     Result<Set<RolesPo>> queryRolesByUserId(@PathVariable("userId") String userId);
+
+    @GetMapping(value = "/resource/all")
+    Result<Set<ResourcePo>> resources();
+
+    @GetMapping(value = "/resource/user/{username}")
+    Result<Set<ResourcePo>> resources(@PathVariable("username") String username);
 
 }
