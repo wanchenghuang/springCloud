@@ -56,7 +56,7 @@ feign:
 jetcache:
   statIntervalMinutes: 1
   areaInCacheName: false
-  hidePackages: com.springboot.cloud
+  hidePackages: com.chauncy.cloud
   local:
     # 默认永久本地缓存
     default:
@@ -76,7 +76,7 @@ jetcache:
       host: ${REDIS_HOST:39.108.136.61}
       port: ${REDIS_PORT:6386}
       password: ${REDIS_PASSWORD:w+.8?2267}
-      database: 2
+      database: 1
 
 #网关白名单，无需要签权url
 gate:
@@ -92,7 +92,7 @@ management:
 
 logging:
   level:
-    com.springboot.cloud: debug
+    com.chauncy.cloud: debug
     com.jalja.org.spring: debug
   path: logs/
   file:

@@ -1,5 +1,7 @@
 package com.chauncy.cloud.gateway.web;
 
+import com.alicp.jetcache.anno.config.EnableCreateCacheAnnotation;
+import com.alicp.jetcache.anno.config.EnableMethodCache;
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -22,6 +24,8 @@ import org.springframework.context.annotation.ComponentScan;
 @EnableCircuitBreaker //在SpringCloud中使用断路器
 //http://localhost:9004/actuator/gateway/routes
 @Slf4j
+@EnableMethodCache(basePackages = "com.chauncy.cloud.client")
+@EnableCreateCacheAnnotation
 public class GatewayApplication {
 
     public static void main(String[] args){

@@ -6,9 +6,12 @@ import com.alibaba.fastjson.serializer.ToStringSerializer;
 import com.alibaba.fastjson.serializer.ValueFilter;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
+import com.chauncy.cloud.core.config.interceptor.UserInterceptor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
@@ -26,8 +29,14 @@ import java.util.List;
 @Slf4j
 public class WebMvcConfig extends WebMvcConfigurationSupport {
 
+    @Bean
+    public HandlerInterceptor userInterceptor() {
+        return new UserInterceptor();
+    }
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(userInterceptor());
         //请求上下文初始化拦截器配置
         log.info("初始化拦截器完成.....");
     }
