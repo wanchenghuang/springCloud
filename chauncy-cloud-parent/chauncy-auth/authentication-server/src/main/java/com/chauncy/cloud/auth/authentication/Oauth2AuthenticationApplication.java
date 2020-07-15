@@ -30,6 +30,6 @@ public class Oauth2AuthenticationApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(Oauth2AuthenticationApplication.class,args);
-        log.info("鉴权服务启动成功;http://localhost:9005/doc.html");
+        log.info("鉴权服务启动成功;http://localhost:9007/doc.html");
     }
 }

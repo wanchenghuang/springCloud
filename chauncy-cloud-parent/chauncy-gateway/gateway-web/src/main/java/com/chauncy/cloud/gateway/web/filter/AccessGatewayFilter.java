@@ -1,6 +1,6 @@
 package com.chauncy.cloud.gateway.web.filter;
 
-import com.chauncy.cloud.client.auth.service.IAuthService;
+import com.chauncy.cloud.client.auth.AuthProvider;
 import com.chauncy.cloud.gateway.web.service.IPermissionService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -36,7 +36,7 @@ public class AccessGatewayFilter implements GlobalFilter {
      * 由authentication-client模块提供签权的feign客户端
      */
     @Autowired
-    private IAuthService authService;
+    private AuthProvider authService;
 
     @Autowired
     private IPermissionService permissionService;
@@ -53,6 +53,7 @@ public class AccessGatewayFilter implements GlobalFilter {
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerHttpRequest request = exchange.getRequest();
         String authentication = request.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
+//        String name = authService.test("cheng");
         String method = request.getMethodValue();
         String url = request.getPath().value();
         log.debug("url:{},method:{},headers:{}", url, method, request.getHeaders());

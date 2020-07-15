@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.ComponentScan;
 
 /**
@@ -24,8 +25,10 @@ import org.springframework.context.annotation.ComponentScan;
 @EnableCircuitBreaker //在SpringCloud中使用断路器
 //http://localhost:9004/actuator/gateway/routes
 @Slf4j
-@EnableMethodCache(basePackages = "com.chauncy.cloud.client")
+@EnableMethodCache(basePackages = "com.chauncy.cloud")
 @EnableCreateCacheAnnotation
+@ComponentScan(basePackages = {"com.chauncy.cloud.client","com.chauncy.cloud.gateway.web","com.chauncy.cloud.auth"})
+@EnableFeignClients(basePackages = {"com.chauncy.cloud.client"})
 public class GatewayApplication {
 
     public static void main(String[] args){

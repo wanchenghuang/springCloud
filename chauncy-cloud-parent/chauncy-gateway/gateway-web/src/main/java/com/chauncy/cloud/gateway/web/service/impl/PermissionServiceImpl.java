@@ -2,7 +2,7 @@ package com.chauncy.cloud.gateway.web.service.impl;
 
 import com.alicp.jetcache.anno.CacheType;
 import com.alicp.jetcache.anno.Cached;
-import com.chauncy.cloud.client.auth.service.IAuthService;
+import com.chauncy.cloud.client.auth.AuthProvider;
 import com.chauncy.cloud.gateway.web.service.IPermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ public class PermissionServiceImpl implements IPermissionService {
      * 由authentication-client模块提供签权的feign客户端
      */
     @Autowired
-    private IAuthService authService;
+    private AuthProvider authService;
 
     @Override
     @Cached(name = "gateway_auth::", key = "#authentication+#method+#url",

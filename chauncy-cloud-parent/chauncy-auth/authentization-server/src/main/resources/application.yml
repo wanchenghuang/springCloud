@@ -115,7 +115,7 @@ feign:
     enabled: true
   okhttp:
     enabled: true
-
+# 暴露监控端点
 management:
   endpoints:
     web:

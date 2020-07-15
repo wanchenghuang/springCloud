@@ -64,10 +64,10 @@ jetcache:
       expireAfterWriteInMillis: 60000
       expireAfterAccessInMillis: 40000
   remote:
-    # 默认2小时的远程缓存
+    # 默认1小时的远程缓存
     default:
       type: redis
-      expireAfterWriteInMillis: 60000
+      expireAfterWriteInMillis: 360000
       keyConvertor: fastjson
       valueEncoder: kryo
       valueDecoder: kryo
