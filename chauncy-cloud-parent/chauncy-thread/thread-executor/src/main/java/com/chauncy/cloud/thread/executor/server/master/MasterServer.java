@@ -1,13 +1,20 @@
 package com.chauncy.cloud.thread.executor.server.master;
 
+import com.chauncy.cloud.common.holder.SpringContextHolder;
+import com.chauncy.cloud.data.ProcessDao;
 import com.chauncy.cloud.thread.executor.IStoppable;
 import com.chauncy.cloud.thread.executor.constant.Constants;
+import com.chauncy.cloud.thread.executor.server.master.config.MasterConfig;
+import com.chauncy.cloud.thread.executor.server.master.runner.MasterSchedulerThread;
 import com.chauncy.cloud.thread.executor.utils.Stopper;
 import com.chauncy.cloud.thread.executor.utils.ThreadUtils;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.ComponentScan;
 
 import javax.annotation.PostConstruct;
@@ -22,16 +29,32 @@ import java.util.concurrent.*;
  * 3、设置线程池属性
  *
  */
-//@ComponentScan("com.chauncy.cloud")
-@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class} )
+//@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class} )
+//@EnableDiscoveryClient
+@ComponentScan("com.chauncy.cloud")
+@MapperScan("com.chauncy.cloud.*.mapper.*")
 public class MasterServer implements IStoppable {
+
+    @Autowired
+    protected ProcessDao processDao;
+
+    @Autowired
+    protected MasterConfig masterConfig;
+
+    /**
+     * 先依赖注入，防止还没有加载初始化bean就用
+     *
+     * Spring应用程序上下文只会用它来初始化
+     */
+    @Autowired
+    private SpringContextHolder springApplicationContext;
 
     private ScheduledExecutorService heartbeatMasterService;
 
     private ExecutorService masterSchedulerService;
 
     public static void main(String[] args){
-        System.setProperty("spring.profiles.active","worker");
+        //System.setProperty("spring.profiles.active","worker");
         Thread.currentThread().setName(Constants.THREAD_NAME_MASTER_SERVER);
         new SpringApplicationBuilder(MasterServer.class).web(WebApplicationType.NONE).run(args);
     }
@@ -42,28 +65,28 @@ public class MasterServer implements IStoppable {
      * 3、将线程实例提交给线程池实例执行（1、submit 2、execute 3、future）
      */
     @PostConstruct
-    public void run(){
+    public void rn(){
+        processDao.test();
         //创建一个线程池实例
         masterSchedulerService = ThreadUtils.newDaemonSingleThreadExecutor("Master-Scheduler-Thread");
         heartbeatMasterService = ThreadUtils.newDaemonScheduledExecutorService("Master-Main-Thread",Constants.defaulMasterHeartbeatThreadNum);
 
-        TaskExecThread taskExecThread = new TaskExecThread();
-        Future<Boolean> future = masterSchedulerService.submit(taskExecThread);
-        System.out.println(future);
-
-        Callable<Boolean> callable = callableThread();
-        Future<Boolean> futures = masterSchedulerService.submit(callable);
-        System.out.println(futures);
+        //扫面任务
+        MasterSchedulerThread masterSchedulerThread = new MasterSchedulerThread(processDao,masterConfig.getMasterExecTaskNum());
+        masterSchedulerService.execute(masterSchedulerThread);
 
          //heartbeat thread implement
         Runnable heartBeatThread = heartBeatThread();
-        masterSchedulerService.execute(heartBeatThread);
-
         heartbeatMasterService.scheduleAtFixedRate(heartBeatThread,5,10, TimeUnit.SECONDS);
 
-        SchedulerThread schedulerThread = new SchedulerThread();
-        masterSchedulerService.execute(schedulerThread);
-        Future future2 = masterSchedulerService.submit(schedulerThread);
+        //TaskExecThread taskExecThread = new TaskExecThread();
+        //Future<Boolean> future = masterSchedulerService.submit(taskExecThread);
+        //System.out.println(future);
+        //
+        //Callable<Boolean> callable = callableThread();
+        //Future<Boolean> futures = masterSchedulerService.submit(callable);
+        //System.out.println(futures);
+
     }
 
     private Runnable heartBeatThread() {
@@ -123,17 +146,6 @@ public class MasterServer implements IStoppable {
 
     }
 
-    static class SchedulerThread implements Runnable{
-
-        @Override
-        public void run() {
-            while (Stopper.isRunning()){
-                System.out.println("模仿每秒执行");
-            }
-
-            System.out.println("master server stopped...");
-        }
-    }
 
     /**
      *

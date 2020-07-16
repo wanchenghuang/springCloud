@@ -15,6 +15,7 @@
         <module>thread-primary</module>
         <module>thread-common</module>
         <module>thread-executor</module>
+        <module>thread-import</module>
     </modules>
 
 

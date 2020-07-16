@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chauncy.cloud.data.mapper.thread.PointMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.chauncy.cloud.data.domain.po.thread.PointPo">
+        <id column="pointId" property="pointId" />
+        <result column="availablePoints" property="availablePoints" />
+        <result column="frozenPoints" property="frozenPoints" />
+        <result column="version" property="version" />
+        <result column="user_" property="user" />
+        <result column="last_update_time" property="lastUpdateTime" />
+        <result column="delayUpdateMode" property="delayUpdateMode" />
+        <result column="latest_point_log_id" property="latestPointLogId" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        pointId, availablePoints, frozenPoints, version, user_, last_update_time, delayUpdateMode, latest_point_log_id
+    </sql>
+
+</mapper>

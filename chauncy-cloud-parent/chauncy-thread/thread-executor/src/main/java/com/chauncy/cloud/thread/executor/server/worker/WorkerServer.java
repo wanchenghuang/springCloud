@@ -40,6 +40,9 @@ public class WorkerServer {
         //将count值减1
         //public void countDown() { };
 
+        //主线程`必须在启动其他线程后立即调用CountDownLatch.await()`方法。这样主线程的操作就会在这个方法上阻塞，
+        // 直到其他线程完成各自的任务。
+        //开始执行前等待n个线程完成各自任务：例如应用程序启动类要确保在处理用户请求前，所有N个外部系统已经启动和运行
         latch = new CountDownLatch(1);
         if (!isCombinedServer) {
             try {

@@ -34,4 +34,6 @@ public final class Constants {
     public static final String EXCHANGE_NAME = "spring-boot-exchange";
     public static final String ROUTING_KEY = "gateway-route";
 
+    public static final String POINT = "point";
+
 }

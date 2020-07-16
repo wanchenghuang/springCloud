@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>thread-executor</artifactId>
+    <artifactId>thread-import</artifactId>
 
 
     <dependencies>
@@ -20,17 +20,9 @@
         </dependency>
 
         <dependency>
-            <groupId>com.chauncy.cloud</groupId>
-            <artifactId>chauncy-framework</artifactId>
-            <version>1.0-SNAPSHOT</version>
+        <groupId>com.chauncy.cloud</groupId>
+        <artifactId>chauncy-framework</artifactId>
+        <version>1.0-SNAPSHOT</version>
         </dependency>
-
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>1.2.16</version>
-            <scope>compile</scope>
-        </dependency>
-
     </dependencies>
 </project>
