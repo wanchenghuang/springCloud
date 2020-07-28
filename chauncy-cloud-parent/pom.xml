@@ -19,6 +19,7 @@
         <module>chauncy-sysadmin</module>
         <module>chauncy-auth</module>
         <module>chauncy-thread</module>
+        <module>chauncy-jvm</module>
     </modules>
 
     <parent>
