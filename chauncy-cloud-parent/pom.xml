@@ -20,6 +20,7 @@
         <module>chauncy-auth</module>
         <module>chauncy-thread</module>
         <module>chauncy-jvm</module>
+        <module>chuancy-strualgorithme</module>
     </modules>
 
     <parent>
