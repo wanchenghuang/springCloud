@@ -2,6 +2,7 @@ package java8;
 
 import bean.UsersPO;
 import lombok.extern.slf4j.Slf4j;
+import org.assertj.core.util.Lists;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
@@ -19,7 +20,7 @@ import java.util.stream.Collectors;
  *
  *   当你处理完流时，通常只是想查看一下结果，而不是将他们聚合为一个值。先看collect的基础方法，它接受三个参数：
  *
- * R collect(Suppliersupplier, BiConsumer<r,? t="" super="">accumulator, BiConsumer<r,r>combiner)
+ * R collect(Supplier supplier, BiConsumer<r,? t="" super=""> accumulator, BiConsumer<r,r> combiner)
  * supplier：一个能创造目标类型实例的方法。accumulator：一个将当元素添加到目标中的方法。combiner：一个将中间状态的多个结果整合到一起的方法（并发的时候会用到）。接着看代码：
  *
  * Stream stream = Stream.of(1, 2, 3, 4).filter(p -> p > 2);
@@ -80,6 +81,9 @@ import java.util.stream.Collectors;
  *
  * BinaryOperator<A> combiner(): (left, right) -> { left.addAll(right); return left; },(m, n) -> m,Integer::sum
  * ,combiner用于合并两个并行执行的结果，将其合并为最终结果A。
+ *
+ * classifier：一个获取Stream元素中主键方法。如user->user.getAge()
+ *
  *
  */
 @RunWith(MockitoJUnitRunner.class)
@@ -205,6 +209,33 @@ public class CollectTest {
         // 传入主键冲突时的处理方法，保留新插入的值，默认使用LinkedHashMap，对主键按照插入顺序排序。
         newMap = list.stream().collect(Collectors.toMap(e -> e.substring(0, 1), e -> e, (m, n) -> n, LinkedHashMap::new));
         System.out.println(newMap);// {1=100, 5=521, 2=250, 8=838, 3=345}
+
+        //List转map
+
+        List<UsersPO> users = Lists.newArrayList();
+        List<UsersPO> userList = Lists.newArrayList();
+
+        UsersPO cheng1 = new UsersPO().setId(1).setAge(23).setName("cheng").setSalary(2000.00);
+
+        UsersPO cheng2 = new UsersPO().setId(1).setAge(23).setName("cheng").setSalary(2000.00);
+
+        UsersPO cheng3 = new UsersPO().setId(3).setAge(25).setName("cheng3").setSalary(2000.00);
+
+        UsersPO cheng4 = new UsersPO().setId(3).setAge(25).setName("cheng3").setSalary(2000.00);
+
+        UsersPO cheng5 = new UsersPO().setId(5).setAge(26).setName("cheng5").setSalary(2000.00);
+
+        //重复
+        users.add(cheng1);users.add(cheng2);users.add(cheng3);users.add(cheng4);users.add(cheng5);
+        //不重复
+        userList.add(cheng1);userList.add(cheng3);userList.add(cheng5);
+
+        //报错，key重复
+        //Map<Integer, String> collect1 = users.stream().collect(Collectors.toMap(a -> a.getId(), b -> b.getName()));
+
+        Map<Integer, String> collect2 = users.stream().collect(Collectors.toMap(UsersPO::getId, b -> b.getName(),(o,n) -> n,LinkedHashMap::new));
+
+        collect2.forEach((x,y) -> System.out.println("key:value = " + x + ":" + y));
 
     }
 

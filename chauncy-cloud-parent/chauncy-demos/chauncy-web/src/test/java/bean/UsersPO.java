@@ -2,8 +2,6 @@ package bean;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,8 +23,6 @@ import java.math.BigDecimal;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("tb_users")
-@ApiModel(value = "TbUsersPo对象", description = "用户表")
 @AllArgsConstructor
 @NoArgsConstructor
 public class UsersPO implements Serializable {

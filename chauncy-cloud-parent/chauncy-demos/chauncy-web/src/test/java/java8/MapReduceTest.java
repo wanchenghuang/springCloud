@@ -35,7 +35,7 @@ import java.util.stream.Collectors;
  *
  *reduce还有其它两个重载方法：
  *
- *Optionalreduce(BinaryOperatoraccumulator):与上面定义基本一样，无计算初始值，所以他返回的是一个Optional。
+ *Optional reduce(BinaryOperatoraccumulator):与上面定义基本一样，无计算初始值，所以他返回的是一个Optional。
  *U reduce(U identity,BiFunction<u,? u=""super="">accumulator,BinaryOperator combiner):与前面两个参数的reduce方法几乎一致，你只要注意到BinaryOperator其实实现了BiFunction和BinaryOperator两个接口。
  */
 @RunWith(MockitoJUnitRunner.class)

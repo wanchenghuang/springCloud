@@ -69,6 +69,7 @@ public class GroupingByTest {
         //不重复
         userList.add(cheng1);userList.add(cheng3);userList.add(cheng5);
 
+        //查重
         List<Map.Entry<String, List<UsersPO>>> duplicate = users.stream().collect(Collectors.groupingBy(e -> fetchGroupKey(e)))
                 .entrySet().stream().filter(a->a.getValue().size()>1).collect(Collectors.toList());
 
@@ -119,8 +120,9 @@ public class GroupingByTest {
         userList.add(cheng1);userList.add(cheng3);userList.add(cheng5);
 
         //全部字段去重
-        //Set<TbUsersPo> usersPos = new ArrayList<>(new TreeSet<>(users));
+        List<UsersPO> usersPos = new ArrayList<>(new TreeSet<>(users));
         Set<UsersPO> usersPos2 = users.stream().collect(Collectors.toSet());
+        List<UsersPO> usersPOs3 = users.stream().distinct().collect(Collectors.toList());
 
         /**
          * 根据多个字段去重
