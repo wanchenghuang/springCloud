@@ -2,6 +2,7 @@ package java8;
 
 import bean.UsersPO;
 import com.chauncy.cloud.data.mapper.test.TbUsersMapper;
+import java8.common.OptionUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.util.Lists;
 import org.junit.After;
@@ -88,6 +89,12 @@ public class GroupingByTest {
 
         System.out.println(noDuplicate);
 
+        //使用自定义函数式方法--统一查重，只需要传递参数即可，不需要指定特定的类
+        List<UsersPO> duplicates = OptionUtils.getDuplicates(users,UsersPO::uniqueAttributes);
+        List<String> duplicateKeys = OptionUtils.getDuplicateKeys(users, UsersPO::uniqueAttributes);
+
+        duplicates.forEach(System.out::println);
+        duplicateKeys.forEach(System.out::println);
 
     }
 

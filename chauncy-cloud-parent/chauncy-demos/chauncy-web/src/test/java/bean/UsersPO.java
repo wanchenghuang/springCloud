@@ -45,4 +45,8 @@ public class UsersPO implements Serializable {
     private BigDecimal money;
 
 
+    public String uniqueAttributes(){
+        return age+"#"+salary.toString();
+    }
+
 }
