@@ -4,21 +4,26 @@ import com.chauncy.cloud.common.base.Result;
 import com.chauncy.cloud.common.enums.system.exception.Code;
 import com.chauncy.cloud.common.exception.BusinessException;
 import com.chauncy.cloud.common.exception.FeignException;
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.multipart.MultipartException;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -36,18 +41,35 @@ public class GlobalExceptionHandler {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(HttpMessageNotReadableException.class)
-    public Result handleHttpMessageNotReadableException(HttpMessageNotReadableException e,
+    public Result handleHttpMessageNotReadableException(HttpMessageNotReadableException ex,
                                                         HttpServletRequest request) {
-        log.error("参数解析失败", e);
-        return Result.error(Code.BAD_REQUEST, "参数解析失败",request.getRequestURI());
+        Code enums = Code.BAD_REQUEST;
+        Throwable cause = ex.getCause();
+        StringBuilder error = new StringBuilder();
+        if(cause instanceof InvalidFormatException){
+            InvalidFormatException tmp = (InvalidFormatException) cause;
+            log.info("{} {} {} {}",tmp.getPathReference(),tmp.getProcessor(),tmp.getValue(),tmp.getTargetType());
+            String path = tmp.getPathReference();
+            error.append("属性").append(path.substring(path.lastIndexOf(".")+1))
+                    .append("转换异常,要求是").append(tmp.getTargetType()).append("传入是")
+                    .append(tmp.getValue());
+        } else {
+            enums = Code.BODY_MISS;
+            error.append(ex.getMessage());
+            log.error(ex.getMessage(), ex);
+        }
+        return Result.error(enums.getCode(), error.toString(),request.getRequestURI());
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MissingServletRequestParameterException.class)
     public Result handleMissingServletRequestParameterException(MissingServletRequestParameterException e,
                                                                 HttpServletRequest request) {
-        log.error("缺少请求参数", e);
-        return Result.error(Code.BAD_REQUEST, "缺少请求参数",request.getRequestURI());
+
+        StringBuilder error = new StringBuilder(Code.BAD_REQUEST.getMsg())
+                .append(":参数").append(e.getParameterName()).append("缺失");
+        log.info("{} {} {}",e.getParameterName(),e.getParameterType(), e.getMessage());
+        return Result.error(Code.BAD_REQUEST, error.toString(),request.getRequestURI());
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -71,13 +93,52 @@ public class GlobalExceptionHandler {
         return Result.error(Code.BAD_REQUEST, builder.toString(), request.getRequestURI());
     }
 
-    @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
+    @ExceptionHandler(value = HttpRequestMethodNotSupportedException.class)
+    public Object httpRequestMethodNotSupportedExceptionHandler(HttpServletRequest request, HttpRequestMethodNotSupportedException ex) {
+        Code code = Code.METHOD_NOT_ALLOWED;
+        StringBuilder error = new StringBuilder(code.getMsg()).append(":")
+                .append("'").append(ex.getMethod()).append("'不支持,请用")
+                .append(Arrays.toString(ex.getSupportedMethods()));
+        log.info("{}:{}", error.toString(), ex.getMessage());
+        return Result.error(code, error.toString(), request.getRequestURI());
+    }
+
+    @ExceptionHandler(value = MethodArgumentTypeMismatchException.class)
+    public @ResponseBody Object methodArgumentTypeMismatchExceptionExceptionHandler(HttpServletRequest req, MethodArgumentTypeMismatchException ex) {
+        Code code = Code.ARGUMENT_NOT_VALID;
+        log.info("ex.getValue():{}, ex.getName():{}, ex.getPropertyName():{}, ex.getRequiredType():{}, ex.getParameter():{}",
+                ex.getValue(),ex.getName(),ex.getPropertyName(),ex.getRequiredType().getName(),ex.getParameter());
+        StringBuilder error = new StringBuilder(code.getMsg())
+                .append(":参数").append(ex.getName())
+                .append("要求类型为").append(ex.getRequiredType().getSimpleName())
+                .append(",传入的为").append(ex.getValue());
+        return Result.error(code, error.toString(), req.getRequestURI());
+    }
+
+    @ExceptionHandler(NullPointerException.class)
+    public @ResponseBody Object handlerNullPointerException(NullPointerException ex, HttpServletRequest req) {
+        log.error(ex.getMessage(), ex);
+        return Result.error(Code.NULL_PARAM, Code.NULL_PARAM.getMsg(), req.getRequestURI());
+    }
+
+    @ExceptionHandler(value = BindException.class)
+    public @ResponseBody Object bindExceptionHandler(HttpServletRequest req, BindException ex) {
+        Code code = Code.ARGUMENT_NOT_VALID;
+        StringBuilder error = new StringBuilder(code.getMsg()).append(":");
+        for(FieldError fe:ex.getFieldErrors()){
+            error.append(fe.getField()).append(" ").append(fe.getDefaultMessage()).append(",");
+            log.info("FieldError [{}] [{}] [{}] [{}] [{}]", fe.getObjectName(), fe.getCode(), fe.getField(),fe.getDefaultMessage(), fe.getRejectedValue());
+        }
+        return Result.error(code, error.toString(), req.getRequestURI());
+    }
+
+    /*@ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public Result handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e,
                                                                HttpServletRequest request) {
         log.error("不支持当前请求方法", e);
         return Result.error(Code.METHOD_NOT_ALLOWED, "不支持当前请求方法",request.getRequestURI());
-    }
+    }*/
 
     @ResponseStatus(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
     @ExceptionHandler(HttpMediaTypeNotSupportedException.class)

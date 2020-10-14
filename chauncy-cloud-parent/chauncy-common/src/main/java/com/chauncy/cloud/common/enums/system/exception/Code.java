@@ -16,6 +16,8 @@ public enum Code implements BaseCode {
     UNAUTHORIZED(401, "无权限访问"),
     NOT_FOUND(404, "找不到对应请求"),
     METHOD_NOT_ALLOWED(405, "不支持的请求方法"),
+    NULL_PARAM(406, "空指针异常"),
+    BODY_MISS(407,"此为JSON交互请求,您丢失了请求体"),
     UNSUPPORTED_MEDIA_TYPE(415, "不支持当前媒体类型"),
 
     ERROR(500, "系统繁忙"),
