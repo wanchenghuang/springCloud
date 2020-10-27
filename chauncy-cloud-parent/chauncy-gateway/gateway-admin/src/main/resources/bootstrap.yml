@@ -10,6 +10,6 @@ spring:
       config:
         server-addr: ${REGISTER_HOST:39.108.136.61}:${REGISTER_PORT:8848}
         file-extension: yml
-#    sentinel:
-#      transport:
-#        dashboard: ${SENTINEL_DASHBOARD_HOST:39.108.136.61}:${SENTINEL_DASHBOARD_PORT:8021}
+    sentinel:
+      transport:
+        dashboard: ${SENTINEL_DASHBOARD_HOST:39.108.136.61}:${SENTINEL_DASHBOARD_PORT:8021}
