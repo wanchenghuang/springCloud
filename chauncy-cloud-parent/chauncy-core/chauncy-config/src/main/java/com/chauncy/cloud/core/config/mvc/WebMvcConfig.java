@@ -81,6 +81,15 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
         super.configureMessageConverters(converters);
     }
 
+    //解决由于fastjson导致返回token格式有问题,
+    // @Override
+    // public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
+    //     Oauth2HttpMessageConverter oauth2HttpMessageConverter = new Oauth2HttpMessageConverter();
+    //     converters.add(0, oauth2HttpMessageConverter);
+    //     converters.add(0, new OAuth2AccessTokenMessageConverter());
+    //     super.configureMessageConverters(converters);
+    // }
+
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/**").addResourceLocations(
