@@ -19,6 +19,15 @@ import java.util.Map;
  * @DateTime: 2020/11/2 12:30 下午
  * @Version: 2.0.0
  * @description:
+ *
+ * 基于 spring boot 1.5.x 的项目，使用 webmvc + security + oauth2。
+ * 集成 fastjson 前，使用缺省的 jackson，.../oauth/token 获取的响应中 token 名称是 access_token : xxxxxxx，和 spring 文档一致。
+ * 集成 fastjson 后，.../oauth/token 获取的响应中 token 名称变成 value : xxxxxxx，且其他字段名及格式均有变化，如果服务器发生异常，甚至会把 exception stack 全部返回，与 spring 文档不一致
+ *
+ * 在Spring框架中，自定义配置了 FastJsonHttpMessageConverter ，覆盖掉 MappingJackson2HttpMessageConverter，导致返回时序列化出现问题
+ * 然而OauthAccessToken 中注解以及内置实现的序列化只支持四种。OAuth2AccessTokenJackson2Serializer 和 OAuth2AccessTokenJackson2Deserializer
+ *
+ *
  * 方法二：解决由于fastjson导致返回格式问题，本项目使用方法一：使用webMvc配置
  *
  * 使用aop 拦截增强 /oauth/token 接口

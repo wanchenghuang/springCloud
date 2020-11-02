@@ -15,7 +15,11 @@ import java.io.IOException;
  * @Author: wanchenghuang
  * @DateTime: 2020/11/2 12:46 下午
  * @Version: 2.0.0
- * @description: 自定义一个消息转换器，并让MappingJackson 消息转换器来处理Oauth2AccessToken的类返回信息
+ * @description:
+ *
+ * 在Spring框架中，自定义配置了 FastJsonHttpMessageConverter ，覆盖掉 MappingJackson2HttpMessageConverter，导致返回时 序列化出现问题
+ *
+ * 自定义一个消息转换器，并让MappingJackson 消息转换器来处理Oauth2AccessToken的类返回信息
  *
  * 解决token返回格式问题
  **/

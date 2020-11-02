@@ -54,6 +54,11 @@ public class OAuth2AccessTokenMessageConverter extends AbstractHttpMessageConver
 		if (Objects.nonNull(refreshToken)) {
 			data.put(OAuth2AccessToken.REFRESH_TOKEN, refreshToken.getValue());
 		}
+		if (Objects.nonNull(accessToken.getAdditionalInformation())){
+			accessToken.getAdditionalInformation().forEach((k,v) ->{
+				data.put(k,v);
+			});
+		}
 		delegateMessageConverter.write(data, MediaType.APPLICATION_JSON, outputMessage);
 	}
 

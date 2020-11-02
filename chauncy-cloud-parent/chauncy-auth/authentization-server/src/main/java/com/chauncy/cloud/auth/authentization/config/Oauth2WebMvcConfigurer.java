@@ -1,8 +1,6 @@
 package com.chauncy.cloud.auth.authentization.config;
 
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
-import com.chauncy.cloud.core.config.mvc.OAuth2AccessTokenMessageConverter;
-import com.chauncy.cloud.core.config.mvc.Oauth2HttpMessageConverter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
@@ -21,9 +19,9 @@ public class Oauth2WebMvcConfigurer extends WebMvcConfigurationSupport {
 
 	@Override
 	public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
-	    // Oauth2HttpMessageConverter oauth2HttpMessageConverter = new Oauth2HttpMessageConverter();
-	    // converters.add(0, oauth2HttpMessageConverter);
-	    converters.add(0, new OAuth2AccessTokenMessageConverter());
+	    Oauth2HttpMessageConverter oauth2HttpMessageConverter = new Oauth2HttpMessageConverter();
+	    converters.add(0, oauth2HttpMessageConverter);
+	    // converters.add(0, new OAuth2AccessTokenMessageConverter());
 	    super.configureMessageConverters(converters);
 	}
 }
