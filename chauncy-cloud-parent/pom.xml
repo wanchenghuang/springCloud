@@ -22,6 +22,7 @@
         <module>chauncy-jvm</module>
         <module>chuancy-strualgorithme</module>
         <module>chauncy-base-dependencies</module>
+        <module>chauncy-util</module>
     </modules>
 
     <parent>
@@ -349,11 +350,11 @@
                 <version>${hutool.version}</version>
             </dependency>
 
-            <dependency>
+            <!--<dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
                 <version>${fastjson.version}</version>
-            </dependency>
+            </dependency>-->
 
             <dependency>
                 <groupId>commons-io</groupId>
