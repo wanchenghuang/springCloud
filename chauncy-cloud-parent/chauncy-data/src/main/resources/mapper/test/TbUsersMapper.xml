@@ -17,7 +17,7 @@
     <select id="queryUser" resultType="com.chauncy.cloud.data.domain.po.test.TbUsersPo">
         select *
         from tb_users
-        where name = 'chauncy'
+        where name = #{username}
     </select>
 
 </mapper>

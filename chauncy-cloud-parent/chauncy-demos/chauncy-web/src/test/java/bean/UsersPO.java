@@ -44,9 +44,12 @@ public class UsersPO implements Serializable {
     @ApiModelProperty(value = "底薪")
     private BigDecimal money;
 
-
     public String uniqueAttributes(){
         return age+"#"+salary.toString();
+    }
+
+    public static UsersPO generate(){
+        return new UsersPO();
     }
 
 }

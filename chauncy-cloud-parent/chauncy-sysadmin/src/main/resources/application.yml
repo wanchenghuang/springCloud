@@ -8,6 +8,7 @@ spring:
     port: ${RABBIT_MQ_PORT:1884}
     username: ${RABBIT_MQ_USERNAME:admin}
     password: ${RABBIT_MQ_PASSWORD:admins}
+    virtual-host: cloud
   redis:
     host: ${REDIS_HOST:39.108.136.61}
     port: ${REDIS_PORT:6386}

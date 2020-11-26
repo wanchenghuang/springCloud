@@ -3,12 +3,12 @@ package com.chauncy.cloud.gateway.web;
 import com.alicp.jetcache.anno.config.EnableCreateCacheAnnotation;
 import com.alicp.jetcache.anno.config.EnableMethodCache;
 import lombok.extern.slf4j.Slf4j;
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.ComponentScan;
 
@@ -29,6 +29,7 @@ import org.springframework.context.annotation.ComponentScan;
 @EnableCreateCacheAnnotation
 @ComponentScan(basePackages = {"com.chauncy.cloud.client","com.chauncy.cloud.gateway.web","com.chauncy.cloud.auth"})
 @EnableFeignClients(basePackages = {"com.chauncy.cloud.client"})
+@RefreshScope
 public class GatewayApplication {
 
     public static void main(String[] args){
