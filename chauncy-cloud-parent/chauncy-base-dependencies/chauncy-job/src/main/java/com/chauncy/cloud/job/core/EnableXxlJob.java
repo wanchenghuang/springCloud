@@ -1,4 +1,4 @@
-package job.core;
+package com.chauncy.cloud.job.core;
 
 /**
  * @Author cheng

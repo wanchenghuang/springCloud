@@ -18,7 +18,6 @@
         <module>chauncy-ribbon</module>
         <module>chauncy-provider-hystrix-payment8001</module>
         <module>chauncy-comsumer-feign-hystrix-order80</module>
-        <module>chauny-engine</module>
     </modules>
 
     <dependencies>

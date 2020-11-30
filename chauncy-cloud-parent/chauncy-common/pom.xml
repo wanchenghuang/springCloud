@@ -102,12 +102,12 @@
             <!--此名称要和.m2/settings.xml中设置的ID一致 -->
             <id>releases</id>
             <name>Nexus Release Repository</name>
-            <url>http://39.108.136.61:8081/repository/chauncy-releases/</url>
+            <url>http://nexus.hwanc.club:9999/repository/chauncy-releases/</url>
         </repository>
         <snapshotRepository>
             <id>snapshots</id>
             <name>Nexus Snapshot Repository</name>
-            <url>http://39.108.136.61:8081/repository/chauncy-snapshots/</url>
+            <url>http://nexus.hwanc.club:9999/repository/chauncy-snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
 

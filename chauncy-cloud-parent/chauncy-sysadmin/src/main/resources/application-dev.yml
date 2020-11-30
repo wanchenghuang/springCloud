@@ -139,7 +139,7 @@ mybatis-plus:
 xxl:
   job:
     admin:
-      addresses: http://service:8885/xxl-job-admin
+      addresses: http://xxl.hwanc.club:9999/xxl-job-admin
     # 执行器通讯TOKEN [选填]：非空时启用；
     accessToken:
     # 执行器AppName [选填]：执行器心跳注册分组依据；为空则关闭自动注册
@@ -152,6 +152,6 @@ xxl:
       #执行器端口号 [选填]：小于等于0则自动获取；默认端口为9999，单机部署多个执行器时，注意要配置不同执行器端口；
       port: 9991
       #执行器运行日志文件存储磁盘路径 [选填] ：需要对该路径拥有读写权限；为空则使用默认路径；
-      logpath: /data/applogs/xxl-job/xxl-handler.log
+      logpath: /data/applogs/xxl-job/jobHandler
       # 执行器日志文件保存天数 [选填] ： 过期日志自动清理, 限制值大于等于3时生效; 否则, 如-1, 关闭自动清理功能；
       logretentiondays: 30

@@ -3,7 +3,7 @@ package com.chauncy.cloud.sysadmin.organization;
 import com.alicp.jetcache.anno.config.EnableCreateCacheAnnotation;
 import com.alicp.jetcache.anno.config.EnableMethodCache;
 import com.github.xiaoymin.swaggerbootstrapui.annotations.EnableSwaggerBootstrapUI;
-import job.core.EnableXxlJob;
+import com.chauncy.cloud.job.core.EnableXxlJob;
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -19,7 +19,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  */
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class} )
 @MapperScan("com.chauncy.cloud.*.mapper.*")
-@ComponentScan(basePackages = {"com.chauncy.cloud","job.core"})
+@ComponentScan(basePackages = {"com.chauncy.cloud"})
 @EnableSwagger2
 @EnableSwaggerBootstrapUI
 @Slf4j

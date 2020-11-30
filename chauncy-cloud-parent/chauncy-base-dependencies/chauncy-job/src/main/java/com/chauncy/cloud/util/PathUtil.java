@@ -1,4 +1,4 @@
-package util;
+package com.chauncy.cloud.util;
 
 /**
  * @Author cheng

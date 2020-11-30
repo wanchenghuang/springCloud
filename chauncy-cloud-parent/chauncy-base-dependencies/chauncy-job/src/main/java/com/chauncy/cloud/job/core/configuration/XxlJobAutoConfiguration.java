@@ -1,4 +1,4 @@
-package job.core.configuration;
+package com.chauncy.cloud.job.core.configuration;
 
 import com.xxl.job.core.executor.impl.XxlJobSpringExecutor;
 import org.slf4j.Logger;
@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import util.PathUtil;
+import com.chauncy.cloud.util.PathUtil;
 
 /**
  * @Author cheng
