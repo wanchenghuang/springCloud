@@ -17,6 +17,9 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 /**
  * @Author cheng
  * @create 2020-03-17 22:16
+ *
+ * -Dspring.profiles.active=
+ *
  */
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class} )
 @MapperScan("com.chauncy.cloud.*.mapper.*")
@@ -28,11 +31,12 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableFeignClients
 @EnableMethodCache(basePackages = "com.chauncy.cloud")
 @EnableCreateCacheAnnotation
+//@RefreshScope
 public class GatewayAdminApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
         SpringApplication.run(GatewayAdminApplication.class, args);
         log.info("启动成功！！！！！");
-        log.info("http://localhost:9003/doc.html");
+        log.info("http://localhost:9003/ doc.html");
     }
 }

@@ -1,6 +1,6 @@
 spring:
   rabbitmq:
-    host: ${RABBIT_MQ_HOST:39.108.136.61}
+    host: ${RABBIT_MQ_HOST:service}
     port: ${RABBIT_MQ_PORT:1884}
     username: ${RABBIT_MQ_USERNAME:admin}
     password: ${RABBIT_MQ_PASSWORD:admins}
@@ -22,9 +22,9 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:${DATASOURCE_DBTYPE:mysql}://${DATASOURCE_HOST:39.108.136.61}:${DATASOURCE_PORT:8386}/sc_admin?characterEncoding=UTF-8&useUnicode=true&useSSL=false
+    url: jdbc:${DATASOURCE_DBTYPE:mysql}://${DATASOURCE_HOST:chauncy}:${DATASOURCE_PORT:3358}/sc_admin?characterEncoding=UTF-8&useUnicode=true&useSSL=false
     username: ${DATASOURCE_USERNAME:root}
-    password: ${DATASOURCE_PASSWORD:%dt6$#@%s}
+    password: ${DATASOURCE_PASSWORD:root}
 
 logging:
   level:

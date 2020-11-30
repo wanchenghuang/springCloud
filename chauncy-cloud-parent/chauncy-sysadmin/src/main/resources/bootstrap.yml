@@ -1,12 +1,14 @@
 server:
   port: ${SERVER_PORT:9005}
 spring:
+  profiles:
+    active: dev
   application:
     name: organization
   cloud:
     nacos:
       discovery:
-        server-addr: ${REGISTER_HOST:39.108.136.61}:${REGISTER_PORT:8848}
+        server-addr: ${REGISTER_HOST:service}:${REGISTER_PORT:8848}
       config:
-        server-addr: ${REGISTER_HOST:39.108.136.61}:${REGISTER_PORT:8848}
+        server-addr: ${REGISTER_HOST:service}:${REGISTER_PORT:8848}
         file-extension: yml

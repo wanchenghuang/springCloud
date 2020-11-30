@@ -28,6 +28,8 @@ import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.gateway.filter.FilterDefinition;
 import org.springframework.cloud.gateway.handler.predicate.PredicateDefinition;
 import org.springframework.cloud.gateway.route.RouteDefinition;
@@ -55,6 +57,7 @@ import static com.chauncy.cloud.common.constant.Constants.GATEWAY_ROUTES;
 @Service
 @Transactional(rollbackFor = Exception.class)
 @Slf4j
+@RefreshScope
 public class GatewayRouteServiceImpl extends AbstractService<GatewayRouteMapper, GatewayRoutePo> implements IGatewayRouteService {
 
     @CreateCache(name = GATEWAY_ROUTES, cacheType = CacheType.REMOTE)
@@ -68,6 +71,9 @@ public class GatewayRouteServiceImpl extends AbstractService<GatewayRouteMapper,
 
     @Autowired
     private EventSender eventSender;
+
+    @Value("${user.age:18.00}")
+    private Double age;
 
     /**
      * @Author chauncy
@@ -254,6 +260,16 @@ public class GatewayRouteServiceImpl extends AbstractService<GatewayRouteMapper,
         }
 
         return searchRoutesVo;
+    }
+
+    /**
+     * 动态更新配置文件测试
+     * @return
+     */
+    @Override
+    public String getConfig() {
+
+        return String.valueOf(age);
     }
 
     /**
