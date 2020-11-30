@@ -54,4 +54,10 @@ public interface IGatewayRouteService extends Service<GatewayRoutePo> {
      *       getRouteDto
      **/
     SearchRoutesVo getRouteByConditions(GetRouteDto getRouteDto);
+
+    /**
+     * 动态更新配置文件测试
+     * @return
+     */
+    String getConfig();
 }
