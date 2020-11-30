@@ -13,6 +13,13 @@
 
 
     <dependencies>
+
+        <dependency>
+            <groupId>com.chauncy.cloud</groupId>
+            <artifactId>chauncy-job</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
         <dependency>
             <groupId>com.chauncy.cloud</groupId>
             <artifactId>chauncy-config</artifactId>
