@@ -19,7 +19,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  */
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class} )
 @MapperScan("com.chauncy.cloud.*.mapper.*")
-@ComponentScan(basePackages = {"com.chauncy.cloud"})
+@ComponentScan(basePackages = {"com.chauncy.cloud","job.core"})
 @EnableSwagger2
 @EnableSwaggerBootstrapUI
 @Slf4j

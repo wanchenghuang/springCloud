@@ -42,8 +42,14 @@ public class XxlJobAutoConfiguration {
     @Value("${xxl.job.executor.logretentiondays}")
     private int logRetentionDays;
 
+    public XxlJobAutoConfiguration() {
+    }
 
-    @Bean
+
+    @Bean(
+        initMethod = "start",
+        destroyMethod = "destroy"
+    )
     public XxlJobSpringExecutor xxlJobExecutor() {
         logger.info(">>>>>>>>>>> xxl-job config init.");
         XxlJobSpringExecutor xxlJobSpringExecutor = new XxlJobSpringExecutor();
