@@ -4,6 +4,7 @@ HELP.md
 **/target/
 **/cloud-log/
 !.mvn/wrapper/maven-wrapper.jar
+.log
 
 ### STS ###
 .apt_generated
