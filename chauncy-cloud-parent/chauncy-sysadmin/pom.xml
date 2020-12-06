@@ -15,9 +15,9 @@
     <dependencies>
 
         <dependency>
-            <groupId>com.chauncy.cloud</groupId>
+            <groupId>com.chauncy.base</groupId>
             <artifactId>chauncy-job</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>0.1-SNAPSHOT</version>
         </dependency>
 
         <dependency>
@@ -33,4 +33,11 @@
     </dependency>
 
     </dependencies>
+
+    <repositories>
+        <repository>
+            <id>group</id>
+            <url>http://nexus.hwanc.club:9999/repository/chauncy-group/</url>
+        </repository>
+    </repositories>
 </project>
