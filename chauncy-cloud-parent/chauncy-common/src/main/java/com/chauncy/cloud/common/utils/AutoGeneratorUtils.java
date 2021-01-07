@@ -25,8 +25,8 @@ public class AutoGeneratorUtils {
 
     public static void main(String args[]){
 
-        autoGenerator("root","%dt6$#@%s","thread","thread1",
-                "import_data_step","39.108.136.61",8386L);
+        autoGenerator("root","root","thread","xxl_job",
+                "xxl_job_groups","chauncy",3358L);
     }
 
     //参数 username/password/packageName/dataBaseName/tableName/url
@@ -119,11 +119,11 @@ public class AutoGeneratorUtils {
         mpg.setTemplate(templateConfig);
 
         // 自定义需要填充的字段 数据库中的字段
-        /*List<TableFill> tableFillList = new ArrayList<>();
+        List<TableFill> tableFillList = new ArrayList<>();
         tableFillList.add(new TableFill("created_by", FieldFill.INSERT));
         tableFillList.add(new TableFill("created_time", FieldFill.INSERT));
         tableFillList.add(new TableFill("update_by", FieldFill.INSERT_UPDATE));
-        tableFillList.add(new TableFill("update_time", FieldFill.INSERT_UPDATE));*/
+        tableFillList.add(new TableFill("update_time", FieldFill.INSERT_UPDATE));
 
         // 策略配置
         StrategyConfig strategy = new StrategyConfig();
@@ -138,7 +138,7 @@ public class AutoGeneratorUtils {
         strategy.setSuperControllerClass("com.chauncy.cloud.common.base.BaseController");
         strategy.setInclude(tableName/*scanner("表名，多个英文逗号分割").split(",")*/);
         //自定义基础的Entity类，公共字段 ，填入将在entity中不出现
-        strategy.setSuperEntityColumns("id","created_by","created_time","updated_by","updated_time");
+        //strategy.setSuperEntityColumns("id","created_by","created_time","updated_by","updated_time");
 
 
         strategy.setControllerMappingHyphenStyle(true);
@@ -146,7 +146,7 @@ public class AutoGeneratorUtils {
         strategy.setTablePrefix(pc.getModuleName() + "_");
         strategy.setLogicDeleteFieldName("del_flag");//对字段del_flag自动添加注解@TableLogic
         //自定义填充字段
-//        strategy.setTableFillList(tableFillList);
+        strategy.setTableFillList(tableFillList);
         mpg.setStrategy(strategy);
         mpg.setTemplateEngine(new FreemarkerTemplateEngine());
         mpg.execute();

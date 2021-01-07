@@ -1,7 +1,7 @@
 package com.chauncy.cloud.data.valid;
 
 import com.alibaba.fastjson.JSON;
-import com.chauncy.cloud.data.domain.po.test.TbUserPo;
+import com.chauncy.cloud.data.domain.po.BasePo;
 import com.chauncy.cloud.data.mapper.base.IBaseMapper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ import java.util.List;
 public class NeedExistValidator implements ConstraintValidator<NeedExistConstraint, Object> {
 
     @Autowired
-    private IBaseMapper<TbUserPo> baseMapper;  //此处需要指定具体类型IBaseMapper<***Po>
+    private IBaseMapper<BasePo> baseMapper;  //此处需要指定具体类型IBaseMapper<***Po>
 
     private String tableName="";
 

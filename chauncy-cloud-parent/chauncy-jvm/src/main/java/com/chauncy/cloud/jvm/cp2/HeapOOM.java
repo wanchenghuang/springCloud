@@ -29,12 +29,11 @@ import java.util.List;
  */
 public class HeapOOM {
 
-    static class OOMObject {
-    }
-    public static void main(String[] args) {
-        List<OOMObject> list = new ArrayList<OOMObject>();
+    public static void main(String[] args) throws InterruptedException{
+        List<HeapOOM> list = new ArrayList<HeapOOM>();
         while (true) {
-            list.add(new OOMObject());
+            list.add(new HeapOOM());
+            Thread.sleep(10);
         }
     }
 }
