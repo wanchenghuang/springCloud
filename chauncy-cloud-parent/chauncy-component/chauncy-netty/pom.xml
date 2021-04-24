@@ -40,5 +40,10 @@
             <version>1.8.0-beta4</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId>
+            <version>4.1.58.Final</version>
+        </dependency>
     </dependencies>
 </project>
