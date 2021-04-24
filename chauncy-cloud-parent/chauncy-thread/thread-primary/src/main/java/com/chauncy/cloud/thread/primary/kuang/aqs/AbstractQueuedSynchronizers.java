@@ -1,5 +1,6 @@
 package com.chauncy.cloud.thread.primary.kuang.aqs;
 
+import java.util.concurrent.locks.AbstractQueuedSynchronizer;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
@@ -14,5 +15,7 @@ public class AbstractQueuedSynchronizers {
     public static void main(String[] args) {
         ReentrantLock reentrantLock = new ReentrantLock();
         reentrantLock.lock();
+        AbstractQueuedSynchronizer
+
     }
 }

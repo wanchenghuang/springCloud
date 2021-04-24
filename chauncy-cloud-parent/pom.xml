@@ -23,6 +23,7 @@
         <module>chuancy-strualgorithme</module>
         <module>chauncy-base-dependencies</module>
         <module>chauncy-util</module>
+        <module>chauncy-component</module>
     </modules>
 
     <parent>
