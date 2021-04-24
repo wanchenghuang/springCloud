@@ -1,0 +1,17 @@
+server:
+  port: ${SERVER_PORT:9003}
+spring:
+  application:
+    name: gateway-admin
+#  cloud:
+#    nacos:
+#      discovery:
+#        server-addr: ${REGISTER_HOST:service}:${REGISTER_PORT:8848}
+#      config:
+#        server-addr: ${REGISTER_HOST:service}:${REGISTER_PORT:8848}
+#        file-extension: yml
+#        refreshable-dataids: gateway-admin-dev.yml
+#        shared-dataids: gateway-admin-dev.yml
+#    sentinel:
+#      transport:
+#        dashboard: ${SENTINEL_DASHBOARD_HOST:service}:${SENTINEL_DASHBOARD_PORT:8021}
