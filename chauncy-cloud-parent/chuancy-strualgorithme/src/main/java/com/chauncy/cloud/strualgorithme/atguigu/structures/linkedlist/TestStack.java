@@ -2,21 +2,27 @@ package com.chauncy.cloud.strualgorithme.atguigu.structures.linkedlist;
 
 import java.util.Stack;
 
-//ÑİÊ¾Õ»StackµÄ»ù±¾Ê¹ÓÃ
+/**
+* @Description TODO
+* @Author cheng
+* @Version : V0.1
+* @since 2021/4/24 16:42
+*/
+//æ¼”ç¤ºæ ˆStackçš„åŸºæœ¬ä½¿ç”¨
 public class TestStack {
 
-	public static void main(String[] args) {
-		Stack<String> stack = new Stack();
-		// ÈëÕ»
-		stack.add("jack");
-		stack.add("tom");
-		stack.add("smith");
+    public static void main(String[] args) {
+        Stack<String> stack = new Stack();
+        // å…¥æ ˆ
+        stack.add("jack");
+        stack.add("tom");
+        stack.add("smith");
 
-		// ³öÕ»
-		// smith, tom , jack
-		while (stack.size() > 0) {
-			System.out.println(stack.pop());//pop¾ÍÊÇ½«Õ»¶¥µÄÊı¾İÈ¡³ö
-		}
-	}
+        // å‡ºæ ˆ
+        // smith, tom , jack
+        while (stack.size() > 0) {
+            System.out.println(stack.pop());//popå°±æ˜¯å°†æ ˆé¡¶çš„æ•°æ®å–å‡º
+        }
+    }
 
 }
