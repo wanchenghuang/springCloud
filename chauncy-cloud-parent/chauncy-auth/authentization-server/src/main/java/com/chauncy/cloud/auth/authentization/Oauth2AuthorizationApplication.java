@@ -26,6 +26,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class Oauth2AuthorizationApplication {
     public static void main(String[] args) {
         SpringApplication.run(Oauth2AuthorizationApplication.class, args);
-        log.info("授权服务启动成功;http://localhost:9006/doc.html");
+        log.info("授权服务启动成功;http://localhost:8000/doc.html");
     }
 }

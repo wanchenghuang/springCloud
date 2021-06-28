@@ -34,6 +34,6 @@ public class GatewayApplication {
 
     public static void main(String[] args){
         SpringApplication.run(GatewayApplication.class,args);
-        log.info("http://localhost:9004/actuator/gateway/routes");
+        log.info("http://localhost:8443/actuator/gateway/routes");
     }
 }

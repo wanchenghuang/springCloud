@@ -1,5 +1,5 @@
 server:
-  port: ${SERVER_PORT:9005}
+  port: ${SERVER_PORT:8010}
 spring:
   profiles:
     active: dev
