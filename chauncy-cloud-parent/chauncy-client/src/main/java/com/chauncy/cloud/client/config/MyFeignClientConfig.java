@@ -5,6 +5,7 @@ import com.chauncy.cloud.common.enums.system.exception.Code;
 import com.chauncy.cloud.common.exception.FeignException;
 import com.chauncy.cloud.common.utils.JSONUtils;
 import com.google.gson.*;
+import feign.Feign;
 import feign.Logger;
 import feign.Response;
 import feign.Util;
@@ -14,7 +15,10 @@ import feign.codec.ErrorDecoder;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.ObjectFactory;
+import org.springframework.boot.autoconfigure.AutoConfigureBefore;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
+import org.springframework.cloud.openfeign.FeignAutoConfiguration;
 import org.springframework.cloud.openfeign.support.ResponseEntityDecoder;
 import org.springframework.cloud.openfeign.support.SpringDecoder;
 import org.springframework.cloud.openfeign.support.SpringEncoder;
@@ -27,6 +31,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @Author cheng
@@ -35,8 +40,25 @@ import java.time.format.DateTimeFormatter;
  * feign调用过程配置 异常处理、localDateTime转换、实体类直接接收返回数据
  */
 @Slf4j
+@AutoConfigureBefore(FeignAutoConfiguration.class)
 @Configuration
+@ConditionalOnClass(Feign.class)
 public class MyFeignClientConfig {
+
+    private int feignOkHttpReadTimeout = 60;
+    private int feignConnectTimeout = 60;
+    private int feignWriteTimeout = 120;
+
+    @Bean
+    public okhttp3.OkHttpClient okHttpClient() {
+        return new okhttp3.OkHttpClient.Builder()
+                .readTimeout(feignOkHttpReadTimeout, TimeUnit.SECONDS)
+                .connectTimeout(feignConnectTimeout, TimeUnit.SECONDS)
+                .writeTimeout(feignWriteTimeout, TimeUnit.SECONDS)
+//				.connectionPool(new ConnectionPool(int maxIdleConnections, long keepAliveDuration, TimeUnit timeUnit))   //自定义链接池
+//				.addInterceptor(XXXXXXXInterceptor) 	//自定义拦截器
+                .build();
+    }
 
     @Bean
     public ErrorDecoder errorDecoder() {

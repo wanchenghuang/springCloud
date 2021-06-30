@@ -1,6 +1,6 @@
 package com.chauncy.cloud.gateway.web.filter;
 
-import com.chauncy.cloud.client.auth.AuthProvider;
+import com.chauncy.cloud.client.service.IAuthService;
 import com.chauncy.cloud.gateway.web.service.IPermissionService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -36,7 +36,7 @@ public class AccessGatewayFilter implements GlobalFilter {
      * 由authentication-client模块提供签权的feign客户端
      */
     @Autowired
-    private AuthProvider authService;
+    private IAuthService authService;
 
     @Autowired
     private IPermissionService permissionService;

@@ -1,9 +1,14 @@
-package com.chauncy.cloud.auth.authentication.service.impl;
+package com.chauncy.cloud.client.service.impl;
 
-import com.chauncy.cloud.auth.authentication.service.IAuthService;
 import com.chauncy.cloud.client.provider.AuthProvider;
+import com.chauncy.cloud.client.service.IAuthService;
 import com.chauncy.cloud.common.base.Result;
-import io.jsonwebtoken.*;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.SignatureException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,14 +17,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.stream.Stream;
 
-/**
- * @Author cheng
- * @create 2020-04-14 11:19
- */
-@Slf4j
-@Service
-public class AuthServiceImpl implements IAuthService {
+;
 
+@Service
+@Slf4j
+public class AuthService implements IAuthService {
     /**
      * Authorization认证开头是"bearer "
      */
@@ -38,7 +40,7 @@ public class AuthServiceImpl implements IAuthService {
      * 不需要网关签权的url配置(/oauth,/open)
      * 默认/oauth开头是不需要的
      */
-//    @Value("${gate.ignore.authentication.startWith}")
+    //@Value("${gate.ignore.authentication.startWith}")
     private String ignoreUrls = "/oauth";
 
     @Override
@@ -80,11 +82,6 @@ public class AuthServiceImpl implements IAuthService {
         return Jwts.parser()  //得到DefaultJwtParser
                 .setSigningKey(signingKey.getBytes()) //设置签名的秘钥
                 .parseClaimsJws(jwtToken);
-    }
-
-    @Override
-    public String test(String name) {
-        return name;
     }
 
     @Override
