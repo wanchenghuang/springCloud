@@ -1,16 +1,13 @@
-package com.chauncy.cloud.gateway.admin.config;
+package com.chauncy.cloud.gateway.web.config;
 
 import com.chauncy.cloud.common.base.Result;
 import com.fasterxml.classmate.TypeResolver;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.web.context.request.async.DeferredResult;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.schema.WildcardType;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.ApiKey;
 import springfox.documentation.service.AuthorizationScope;
@@ -18,19 +15,20 @@ import springfox.documentation.service.SecurityReference;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static springfox.documentation.schema.AlternateTypeRules.newRule;
-
 /**
  * @Author cheng
- * @create 2020-03-06 17:54
+ * @create 2021-06-30 14:20
+ *
+ * gateway 使用的是flux 与servlet不同，暂时无法解决在网关层面实现设置全局token的问题
+ *
+ * TODO 待解决
  */
-@Configuration
-@EnableSwagger2
+//@Configuration
+//@EnableSwagger2Doc
 public class SwaggerConfig {
 
     @Autowired
@@ -50,10 +48,10 @@ public class SwaggerConfig {
                 .securitySchemes(securitySchemes())
                 .securityContexts(securityContexts())
                 .genericModelSubstitutes(Result.class)
-                .alternateTypeRules( //自定义规则，如果遇到DeferredResult，则把泛型类转成json
+                /*.alternateTypeRules( //自定义规则，如果遇到DeferredResult，则把泛型类转成json
                         newRule(typeResolver.resolve(DeferredResult.class,
                                 typeResolver.resolve(Result.class, WildcardType.class)),
-                                typeResolver.resolve(WildcardType.class)))
+                                typeResolver.resolve(WildcardType.class)))*/
                 ;
     }
 
