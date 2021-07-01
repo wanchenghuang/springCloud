@@ -133,3 +133,16 @@ mybatis:
 #  ReadTimeout: 50000
 ##指的是建立事件后从服务器读取到可用资源所用资源的时间
 #  ConnectTimeout: 50000
+
+#网关白名单，无需要签权url
+gate:
+  ignore:
+    authentication:
+      startWith: /oauth,/open,/v2/api-docs
+
+# 忽略鉴权url
+ignored:
+  urls:
+    - /swagger-ui.html
+    - /swagger-resources/**
+    - /swagger/**

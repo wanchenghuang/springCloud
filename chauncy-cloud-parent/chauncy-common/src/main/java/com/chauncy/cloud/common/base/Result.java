@@ -9,9 +9,8 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * @Author cheng
@@ -38,7 +37,7 @@ public class Result<T> implements Serializable {
     private String path;
 
     @ApiModelProperty(value = "时间戳")
-    private LocalDateTime timestamp = LocalDateTime.now();
+    private String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
     public boolean isSuccess() {
         return code == Code.SUCCESS.getCode();
