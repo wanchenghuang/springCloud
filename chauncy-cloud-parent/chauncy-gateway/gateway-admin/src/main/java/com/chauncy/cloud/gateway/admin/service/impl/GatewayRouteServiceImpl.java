@@ -157,6 +157,7 @@ public class GatewayRouteServiceImpl extends AbstractService<GatewayRouteMapper,
                 redisUtil.hset(GATEWAY_ROUTES,gatewayRoute.getRouteId(), new Gson().toJson(gatewayRouteToRouteDefinition(gatewayRoute)))
         );
         log.info("全局初使化网关路由成功!");
+        //发送消息至mq更新网关路由
         return true;
     }
 

@@ -20,7 +20,8 @@ CREATE TABLE gateway_route
     created_time DATETIME     NOT NULL DEFAULT now() COMMENT '创建时间',
     updated_time DATETIME     NOT NULL DEFAULT now() COMMENT '更新时间',
     created_by   VARCHAR(100) NOT NULL COMMENT '创建人',
-    updated_by   VARCHAR(100) NOT NULL COMMENT '更新人'
+    updated_by   VARCHAR(100) NOT NULL COMMENT '更新人',
+    del_flag     tinyint(1)   not null default 0 comment '删除标志 1-删除'
 ) COMMENT '网关路由表';
 
 CREATE UNIQUE INDEX ux_gateway_routes_uri ON gateway_route (uri);
