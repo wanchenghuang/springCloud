@@ -28,7 +28,8 @@ public class MobileUserDetailsService extends CustomUserDetailsService {
         log.info("load user by mobile:{}", user.toString());
 
         // 如果为mobile模式，从短信服务中获取验证码（动态密码）
-        String credentials = smsCodeProvider.getSmsCode(uniqueId, "LOGIN");
+        //String credentials = smsCodeProvider.getSmsCode(uniqueId, "LOGIN");
+        String credentials = "验证码";
 
         return new org.springframework.security.core.userdetails.User(
                 user.getUsername(),

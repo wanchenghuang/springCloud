@@ -41,6 +41,7 @@ public class MobileTokenGranter extends ResourceOwnerPasswordTokenGranter {
         Authentication userAuth = new UsernamePasswordAuthenticationToken(username, password);
         MobileAuthenticationToken mobileAuthenticationToken = new MobileAuthenticationToken(userAuth);
         ((AbstractAuthenticationToken) userAuth).setDetails(parameters);
+        mobileAuthenticationToken.setDetails(parameters);
         try {
             userAuth = this.authenticationManager.authenticate(mobileAuthenticationToken);
         } catch (AccountStatusException ase) {

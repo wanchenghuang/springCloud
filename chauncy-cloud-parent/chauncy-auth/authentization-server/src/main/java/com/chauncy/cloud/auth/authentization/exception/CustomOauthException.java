@@ -13,11 +13,12 @@ import org.springframework.security.oauth2.common.exceptions.OAuth2Exception;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @JsonSerialize(using = CustomOauthExceptionSerializer.class)
+public
 class CustomOauthException extends OAuth2Exception {
 
     private final Result result;
 
-    CustomOauthException(OAuth2Exception oAuth2Exception) {
+    public CustomOauthException(OAuth2Exception oAuth2Exception) {
         super(oAuth2Exception.getSummary(), oAuth2Exception);
         this.result = Result.error(AuthErrorType.valueOf(oAuth2Exception.getOAuth2ErrorCode().toUpperCase()), oAuth2Exception.toString());
     }
