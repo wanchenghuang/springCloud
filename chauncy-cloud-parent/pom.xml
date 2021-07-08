@@ -24,6 +24,7 @@
         <module>chauncy-base-dependencies</module>
         <module>chauncy-util</module>
         <module>chauncy-component</module>
+        <module>chauncy-audio</module>
     </modules>
 
     <parent>
