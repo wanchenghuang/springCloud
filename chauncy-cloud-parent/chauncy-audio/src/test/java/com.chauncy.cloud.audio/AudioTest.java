@@ -1,16 +1,19 @@
 package com.chauncy.cloud.audio;
 
+import com.google.common.base.Stopwatch;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -25,14 +28,51 @@ public class AudioTest {
 
     @Test
     public void audioTest3() {
-        String ffmpegPath = "C:\\ffmpeg20200809\\bin\\ffmpeg.exe";
-        String inputVideoPath = "C:\\Users\\Administrator\\Desktop\\biwen\\1.mp3";
+        //linux环境配置了环境变量不需要指定执行路径
+        //String ffmpegPath = "C:\\ffmpeg20200809\\bin\\ffmpeg.exe";
+        String sourceVideoPath = "/data/soft/develop/ffmpeg/";
+        String targetVideoPath = "/data/soft/develop/ffmpeg/";
+        String sourceFileName = "1.mp3";
+        String targetFileName = "2_out.mp3";
+
+        //String  webroot = "/data/soft/develop/ffmpeg/ffmpeg-4.4-amd64-static";
+        Runtime run = null;
+        //System.out.println(new File(webroot).getAbsolutePath());
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        try {
+            run = Runtime.getRuntime();
+            //Process process = run.exec(new File(webroot).getAbsolutePath() + "/ffmpeg -i " + inputVideoPath + " -af silenceremove=stop_periods=-1:stop_duration=1:stop_threshold=-15dB " + outputVideoPath);
+            Process process = run.exec("ffmpeg -i " + sourceVideoPath+sourceFileName + " -af silenceremove=stop_periods=-1:stop_duration=1:stop_threshold=-15dB " + targetVideoPath+targetFileName);
+            System.out.println("转化结束" + stopwatch.elapsed(TimeUnit.MILLISECONDS));
+            process.getOutputStream().close();
+            process.getInputStream().close();
+            process.getErrorStream().close();
+            process.waitFor();
+            FileInputStream file = new FileInputStream(targetVideoPath+targetFileName);
+            byte[] data = new byte[1024]; //数据存储的数组
+            int i = file.read(data);
+            //解析数据
+            String s = new String(data,0,i);
+            //输出字符串
+            System.out.println(s);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            run.freeMemory();
+        }
+
+    }
+
+    @Test
+    public void test1(){
         // 组装 格式转换 命令
         List<String> command = new LinkedList<>();
-        command.add(ffmpegPath);
-        command.add("-i");
+        String inputVideoPath = "/data/soft/develop/ffmpeg/1.mp3";
+        String outputVideoPath = "/data/soft/develop/ffmpeg/1_outt.mp3";
+        command.add("/data/soft/develop/ffmpeg/ffmpeg-4.4-amd64-static/ffmpeg -i ");
         command.add(inputVideoPath);
-        //command.add(outputVideoPath);
+        command.add(" -af silenceremove=stop_periods=-1:stop_duration=1:stop_threshold=-15dB ");
+        command.add(outputVideoPath);
         try {
             // 执行命令
             exeute(command);
@@ -57,7 +97,7 @@ public class AudioTest {
     //@Test
     //public void audioTest2() {
     //
-    //    String   = "D:\\devsoft\\ffmpeg\\bin";
+    //    String  webroot = "D:\\devsoft\\ffmpeg\\bin";
     //    Runtime run = null;
     //    System.out.println(new File(webroot).getAbsolutePath());
     //    try {
